@@ -130,6 +130,15 @@ class UI_setup():
                     password = password + characters[randm(0,len(characters)-1)]
                 self.output.setText(f'Password is : {password}')
                 
+    #Slot(function) gets executed when any of the radio buttons is selected or 
+    # unselected (toggled)
+    def selected(self,chars, option):
+            
+        if option.isChecked() and chars not in self._characters:
+            self._characters.append(chars)
+        else:
+            self._characters.remove(chars)  
+                        
         
 if __name__ == "__main__":
     import sys
