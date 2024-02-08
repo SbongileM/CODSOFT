@@ -85,6 +85,14 @@ class UI_setup():
         
         self.verticalLayout.addLayout(self.horizontalLayout_2)
         
+        #Output label settings
+        self.output = QtWidgets.QLineEdit("")
+        self.output.setFont(self.font)
+        self.output.setFrame(False)
+        self.output.setReadOnly(True)
+        self.output.setStyleSheet(u"background-color:rgb(240,240,230);")
+        self.verticalLayout.addWidget(self.output)
+        
         window.setCentralWidget(self.centralwidget)       
         
         
