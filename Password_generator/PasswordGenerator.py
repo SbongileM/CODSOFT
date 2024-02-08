@@ -25,6 +25,19 @@ class UI_setup():
         window.setMaximumSize(700,150)
         window.setWindowIcon(QtGui.QIcon(':/Icons/PasswordIcon.png'))
         
+        #window layout settings
+        self.centralwidget = QtWidgets.QWidget(window)
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
+        
+        #Font settings
+        self.font = QtGui.QFont()
+        self.font.setPointSize(12)
+        self.font.setBold(True)
+        self.font.setWeight(75)
+               
+        
         
 if __name__ == "__main__":
     import sys
