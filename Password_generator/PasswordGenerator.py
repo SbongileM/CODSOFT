@@ -22,7 +22,7 @@ class UI_setup():
         
         #Private variables for character/complexity options
         self._characters = []
-        self._letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        self._alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         self._nums =  "0123456789"
         self._chars = "'"+'!"#$%&()*+,-./:;<=>?@[]^_`{|}~' 
         
@@ -60,32 +60,32 @@ class UI_setup():
         self.verticalLayout.addLayout(self.horizontalLayout)
         
         #Complexity or character options selection radio buttons
-        self.ABC = QtWidgets.QRadioButton("ABCD")
+        self.ABC = QtWidgets.QRadioButton("ABCD", toggled = lambda:self.selected(self._alphabets,self.ABC))
         self.ABC.setFont(self.font)
         self.ABC.setAutoExclusive(False)
         self.horizontalLayout_2.addWidget(self.ABC)
         self.horizontalLayout_2.addItem(self.spacer)
         
-        self.abc = QtWidgets.QRadioButton("abcd")
+        self.abc = QtWidgets.QRadioButton("abcd", toggled = lambda:self.selected(self._alphabets.lower(),self.abc))
         self.abc.setFont(self.font)
         self.abc.setAutoExclusive(False)
         self.horizontalLayout_2.addWidget(self.abc)
         self.horizontalLayout_2.addItem(self.spacer)
 
-        self.numbers = QtWidgets.QRadioButton("1234")
+        self.numbers = QtWidgets.QRadioButton("1234", toggled = lambda:self.selected(self._nums, self.numbers))
         self.numbers.setFont(self.font)
         self.numbers.setAutoExclusive(False)
         self.horizontalLayout_2.addWidget(self.numbers)
         self.horizontalLayout_2.addItem(self.spacer)
 
-        self.special_chars = QtWidgets.QRadioButton("@#$*")
+        self.special_chars = QtWidgets.QRadioButton("@#$*", toggled = lambda:self.selected(self._chars,self.special_chars))
         self.special_chars.setFont(self.font)
         self.special_chars.setAutoExclusive(False)
         self.horizontalLayout_2.addWidget(self.special_chars)
         self.horizontalLayout_2.addItem(self.spacer)
         
         #Enter button settings
-        self.EnterButton = QtWidgets.QPushButton("Enter")
+        self.EnterButton = QtWidgets.QPushButton("Enter", clicked = lambda:self.generatePassword())
         self.EnterButton.setFixedSize(75,27)
         self.EnterButton.setFont(self.font)
         self.horizontalLayout_2.addWidget(self.EnterButton)
