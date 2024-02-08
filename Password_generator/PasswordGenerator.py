@@ -36,7 +36,21 @@ class UI_setup():
         self.font.setPointSize(12)
         self.font.setBold(True)
         self.font.setWeight(75)
-               
+        
+        #Prompt label settings
+        self.prompt = QtWidgets.QLabel("Specify the desired password length :")
+        self.prompt.setFont(self.font)
+        self.horizontalLayout.addWidget(self.prompt)
+        
+        #Input or entry widget setup
+        self.lineEdit = QtWidgets.QLineEdit("")
+        self.lineEdit.setFont(self.font)
+        self.lineEdit.setFrame(False)
+        self.lineEdit.setStyleSheet(u"background-color:rgb(240,240,230);")
+        self.horizontalLayout.addWidget(self.lineEdit)
+        
+        self.verticalLayout.addLayout(self.horizontalLayout)
+        window.setCentralWidget(self.centralwidget)       
         
         
 if __name__ == "__main__":
