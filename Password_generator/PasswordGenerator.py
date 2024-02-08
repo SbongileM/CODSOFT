@@ -30,6 +30,7 @@ class UI_setup():
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
+        self.spacer = QtWidgets.QSpacerItem(40, 20)
         
         #Font settings
         self.font = QtGui.QFont()
@@ -50,6 +51,40 @@ class UI_setup():
         self.horizontalLayout.addWidget(self.lineEdit)
         
         self.verticalLayout.addLayout(self.horizontalLayout)
+        
+        #Complexity or character options selection radio buttons
+        self.ABC = QtWidgets.QRadioButton("ABCD")
+        self.ABC.setFont(self.font)
+        self.ABC.setAutoExclusive(False)
+        self.horizontalLayout_2.addWidget(self.ABC)
+        self.horizontalLayout_2.addItem(self.spacer)
+        
+        self.abc = QtWidgets.QRadioButton("abcd")
+        self.abc.setFont(self.font)
+        self.abc.setAutoExclusive(False)
+        self.horizontalLayout_2.addWidget(self.abc)
+        self.horizontalLayout_2.addItem(self.spacer)
+
+        self.numbers = QtWidgets.QRadioButton("1234")
+        self.numbers.setFont(self.font)
+        self.numbers.setAutoExclusive(False)
+        self.horizontalLayout_2.addWidget(self.numbers)
+        self.horizontalLayout_2.addItem(self.spacer)
+
+        self.special_chars = QtWidgets.QRadioButton("@#$*")
+        self.special_chars.setFont(self.font)
+        self.special_chars.setAutoExclusive(False)
+        self.horizontalLayout_2.addWidget(self.special_chars)
+        self.horizontalLayout_2.addItem(self.spacer)
+        
+        #Enter button settings
+        self.EnterButton = QtWidgets.QPushButton("Enter")
+        self.EnterButton.setFixedSize(75,27)
+        self.EnterButton.setFont(self.font)
+        self.horizontalLayout_2.addWidget(self.EnterButton)
+        
+        self.verticalLayout.addLayout(self.horizontalLayout_2)
+        
         window.setCentralWidget(self.centralwidget)       
         
         
