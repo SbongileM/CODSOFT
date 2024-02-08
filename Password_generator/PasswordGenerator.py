@@ -11,6 +11,7 @@ in the password.
 
 '''
 from PyQt5 import QtGui, QtWidgets
+from random import randint as randm
 import Assets
 
 #The following class sets up the application window and executes the fuctionality of the
@@ -18,6 +19,12 @@ import Assets
 class UI_setup():
     def __init__(self,window):
         super().__init__()
+        
+        #Private variables for character/complexity options
+        self._characters = []
+        self._letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        self._nums =  "0123456789"
+        self._chars = "'"+'!"#$%&()*+,-./:;<=>?@[]^_`{|}~' 
         
         #window settings
         window.setWindowTitle("PasswordGenerator")
@@ -95,6 +102,34 @@ class UI_setup():
         
         window.setCentralWidget(self.centralwidget)       
         
+    #This function generates a password containing the selected characters and the 
+    #given length, and then displays it on the screen. The returned password can be copied
+    def generatePassword(self): 
+            
+        input = self.lineEdit.text()
+        password = ""
+                       
+        try:
+            length = int(input)
+        except ValueError:
+            self.output.setText('Specified length must be a whole number')
+        else:
+            if length not in range(8,51):
+                self.output.setText("Specified length must be between 8 and 50 characters")
+                    
+            #If none of the options are selected, the application prompts the user to
+            #select one before the application continues to run
+            elif self.ABC.isChecked()==self.abc.isChecked()==self.numbers.isChecked()==self.special_chars.isChecked()==False:
+                self.output.setText("You have to select at least one option")
+                
+            #Prints a random password of the specified length
+            else:
+                characters = "".join(self._characters)
+                    
+                for i in range(length):
+                    password = password + characters[randm(0,len(characters)-1)]
+                self.output.setText(f'Password is : {password}')
+                
         
 if __name__ == "__main__":
     import sys
