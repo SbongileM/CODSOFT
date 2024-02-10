@@ -9,6 +9,7 @@ calculation and then displays the result.
 
 '''
 from PyQt5 import QtCore, QtGui, QtWidgets
+from re import findall as split
 
 class WindowSetup():
     def __init__(self, window):
@@ -196,7 +197,7 @@ class WindowSetup():
         self.horizontal_layout_6.addWidget(self.zero)
         
         #Decimal point settings
-        self.point = QtWidgets.QPushButton(".")
+        self.point = QtWidgets.QPushButton(".",clicked = lambda: self.decPoint())
         self.point.setSizePolicy(size_policy)
         self.point.setStyleSheet(style)
         self.horizontal_layout_6.addWidget(self.point)
@@ -237,6 +238,22 @@ class WindowSetup():
     #Back space functionality
     def delete(self):
         self.screen.setText((self.screen.text())[:-1])
+        
+    #Extracts digits from the expression shown on the calculator screen
+    #using a regular expression that removes the '+-*/' characters and stores
+    #the digits into a list that can be traversed better than a string
+    def split_up(self, input_):
+        return split(r'\d+\.\d+|\d+|\.',input_)
+    
+    #Decimal point functionality
+    def decPoint(self):
+        try:
+            if "." in self.split_up(self.screen.text())[-1]:
+                pass
+            else:
+                self.screen.setText(f'{self.screen.text()}.')
+        except:
+            self.screen.setText("ERROR")
     
 import Assets
 
