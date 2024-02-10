@@ -42,6 +42,21 @@ class Game():
         self.centralwidget = QtWidgets.QWidget(window)
         self.vertical_layout = QtWidgets.QVBoxLayout(self.centralwidget)
         
+        #General font settings
+        font = QtGui.QFont()
+        font.setFamily("MV Boli")
+        
+        #Game title settings
+        self.title = QtWidgets.QLabel(self.centralwidget)
+        self.title.setFont(font)
+        self.title.setText("<html><head/><body><p><span style=\" font-size:45pt; font-weight:600; color:#d9245e;\"\
+                           >Rock</span><span style=\" font-size:45pt; font-weight:600; color:#55aa00;\"\
+                           >-</span><span style=\" font-size:45pt; font-weight:600; color:#d1d100;\"\
+                           >Paper</span><span style=\" font-size:45pt; font-weight:600; color:#55aa00;\"\
+                           >-</span><span style=\" font-size:45pt; font-weight:600; color:#55aaff;\"\
+                           >Scissors</span></p></body></html>")
+        self.vertical_layout.addWidget(self.title)
+        
         window.setCentralWidget(self.centralwidget)
         QtCore.QMetaObject.connectSlotsByName(window)
       
