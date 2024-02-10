@@ -153,6 +153,8 @@ class Game():
     def start(self):
         #sets window to display move selection page
         self.stacked_widget.setCurrentIndex(1)
+        #sets computer move icon for the game over window
+        self.game_over.computer_icon.setStyleSheet(self.set_computer_fighter()) 
         
     #Commences another game round when player clicks the Replay push button 
     def replay(self):
@@ -167,6 +169,26 @@ class Game():
     def draw_computer_fighter(self):
         options = ["rock","paper","scissors"]
         return options[draw(0,2)]
+    
+    #Sets computer move
+    def set_computer_fighter(self):
+        self.computer_move = self.draw_computer_fighter()
+
+        if self.computer_move == "rock":
+            return "image: url(:/Icons/rock_right.png);"
+        elif self.computer_move == "paper":
+            return "image: url(:/Icons/paper_right.png);"
+        elif self.computer_move == "scissors":
+            return "image: url(:/Icons/scissors_right.png);"
+      
+    #Sets player move  
+    def set_player_fighter(self):
+        if self.player_move == "rock":
+            return "image: url(:/Icons/rock_left.png);"
+        elif self.player_move == "paper":
+            return "image: url(:/Icons/paper_left.png);"
+        elif self.player_move == "scissors":
+            return "image: url(:/Icons/scissors_left.png);" 
         
     #Creates a time delay of 0.8 seconds for switching pages
     def delay(self):
@@ -195,6 +217,8 @@ class Game():
             self.stacked_widget.setCurrentIndex(2)
             #Swaps pages until the game over page is reached
             self.delay()
+            #Settings for the game over results
+            self.game_over.player_icon.setStyleSheet(self.set_player_fighter())
     
     
 if __name__ == "__main__":
