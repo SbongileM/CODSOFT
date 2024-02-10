@@ -20,7 +20,7 @@ class WindowSetup():
         
         #Window settings
         window.setWindowTitle("Calculator")
-        window.setMaximumSize(600,500)
+        window.setMaximumSize(500,500)
         window.resize(300,500)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/Icons/window icon.png"))
@@ -48,7 +48,7 @@ class WindowSetup():
         #Calculator screen settings
         self.screen = QtWidgets.QLabel("Click on two numbers and an operation")
         self.screen.setSizePolicy(size_policy)
-        self.screen.setMaximumWidth(600)
+        self.screen.setMaximumWidth(500)
         self.screen.setFont(font)
         self.screen.setLayoutDirection(QtCore.Qt.RightToLeft)
         self.screen.setFrameShape(QtWidgets.QFrame.Box)
