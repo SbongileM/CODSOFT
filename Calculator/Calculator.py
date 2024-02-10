@@ -202,7 +202,7 @@ class WindowSetup():
         self.horizontal_layout_6.addWidget(self.point)
         
         #Equal sign settings
-        self.equal = QtWidgets.QPushButton("=")
+        self.equal = QtWidgets.QPushButton("=",clicked = lambda: self.calculate())
         self.equal.setSizePolicy(size_policy)
         self.equal.setStyleSheet("font: 63 12pt \"Segoe UI Semibold\";"
                                  "background-color: rgb(56, 199, 16);"
@@ -223,6 +223,16 @@ class WindowSetup():
             self.screen.setText(button)
         else:
             self.screen.setText(f'{self.screen.text()}{button}')
+            
+    #Evaluation function
+    def calculate(self):
+        input_txt = self.screen.text()
+        try:
+            answer = eval(input_txt)
+            if type(answer) == float : answer = round(answer,20)
+            self.screen.setText(str(answer))
+        except:
+            self.screen.setText("ERROR")
     
 import Assets
 
