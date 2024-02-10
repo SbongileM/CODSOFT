@@ -5,7 +5,10 @@ Project: GUI desktop calculator application for CodSoft internship
 
 This project aims to create a simple calculator with basic arithmetic operations using python.
 The calculator prompts the user to input two numbers and an operation of choice, performs a 
-calculation and then displays the result.
+calculation and then displays the result.Additional functionalities such as percentage, square 
+root,square and parenthesis were added.The calculator can evaluate more than just two numbers.
+However, the functionality of the added operations is limited to only the current(one) number 
+and does not work for an expression within a pair of parethesis. For example, sqrt(8+9).
 
 '''
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -254,6 +257,7 @@ class WindowSetup():
                 self.screen.setText(f'{self.screen.text()}.')
         except:
             self.screen.setText("ERROR")
+            
     
 import Assets
 
