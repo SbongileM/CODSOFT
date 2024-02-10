@@ -1,3 +1,5 @@
 Pipfile
 Resources.qrc
 PasswordGenerator.ui
+CalcResources.qrc
+Calculator.ui
