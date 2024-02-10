@@ -25,9 +25,8 @@ from Loading import loading
 from GameOver import gameOver
 
 #Emits a signal when the player move has been selected
-class Player_Signal(QtCore.QObject):
+class player_Signal(QtCore.QObject):
     emit_signal = QtCore.pyqtSignal(str)
-
 
 #Game window class
 class Game():
@@ -43,7 +42,7 @@ class Game():
         self.computer_score = 0
         
         #Player signal
-        self.player_signal = Player_Signal()
+        self.player_signal = player_Signal()
         #copying emitted player move into the set_player_move function
         self.player_signal.emit_signal.connect(self.set_player_move)
         
@@ -114,8 +113,8 @@ class Game():
         #Selection instruction label
         self.select = QtWidgets.QLabel(self.selection)
         self.select.setFont(font)
-        self.select.setText("<html><head/><body><p><span style=\" font-size:24pt; font-weight:600; color:#55aa00;\"\
-                            >Pick your fighter</span></p></body></html>")
+        self.select.setText("<html><head/><body><p><span style=\" font-size:24pt; font-weight:600;\
+            color:#55aa00;\">Pick your fighter</span></p></body></html>")
         self.select.setGeometry(QtCore.QRect(140, 210, 291, 41))
         #Selection page quit button
         self.quit_button = QtWidgets.QPushButton(self.selection)
@@ -177,22 +176,28 @@ class Game():
     #Sets computer move
     def set_computer_fighter(self):
         self.computer_move = self.draw_computer_fighter()
+        image = ""
 
         if self.computer_move == "rock":
-            return "image: url(:/Icons/rock_right.png);"
+            image = "image: url(:/Icons/rock_right.png);"
         elif self.computer_move == "paper":
-            return "image: url(:/Icons/paper_right.png);"
+            image = "image: url(:/Icons/paper_right.png);"
         elif self.computer_move == "scissors":
-            return "image: url(:/Icons/scissors_right.png);"
+            image = "image: url(:/Icons/scissors_right.png);"
+        return image
       
     #Sets player move  
     def set_player_fighter(self):
+        image = ""
+        
         if self.player_move == "rock":
-            return "image: url(:/Icons/rock_left.png);"
+            image = "image: url(:/Icons/rock_left.png);"
         elif self.player_move == "paper":
-            return "image: url(:/Icons/paper_left.png);"
+            image = "image: url(:/Icons/paper_left.png);"
         elif self.player_move == "scissors":
-            return "image: url(:/Icons/scissors_left.png);" 
+            image = "image: url(:/Icons/scissors_left.png);" 
+            
+        return image
         
     #Creates a time delay of 0.8 seconds for switching pages
     def delay(self):
@@ -214,7 +219,7 @@ class Game():
     #Basically the game loop. It checkes the move the player has selected, 
     #emits the signal, and then set the game over results.
     def selected(self,pressed):
-        if pressed == "rock" or pressed == "paper" or pressed == "scissors":
+        if pressed in ("rock","paper","scissors"):
             #emits signal once player has selected their move
             self.player_signal.emit_signal.emit(pressed)
             #sets computer move icon for the game over window
@@ -237,9 +242,9 @@ class Game():
     # or It's a draw.
     def results(self,player,computer):
         if player == computer:
-           outcome = "It's a tie"
-           self.computer_score += 1
-           self.player_score += 1
+            outcome = "It's a tie"
+            self.computer_score += 1
+            self.player_score += 1
            
         elif (player == "rock" and computer == "scissors")\
             or (player == "scissors" and computer == "paper")\
@@ -250,9 +255,9 @@ class Game():
             self.player_score += 1
            
         else:
-           outcome = "You lost :("
-           self.computer_score += 1
-           self.player_score = self.player_score
+            outcome = "You lost :("
+            self.computer_score += 1
+            self.player_score = self.player_score
            
         return outcome
     
@@ -263,3 +268,4 @@ if __name__ == "__main__":
     ui = Game(game_window)
     game_window.show()
     sys.exit(app.exec_())
+    
