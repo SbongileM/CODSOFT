@@ -163,6 +163,11 @@ class Game():
     def set_player_move(self,move):
         self.player_move = move
         
+    #Generates random move for the computer
+    def draw_computer_fighter(self):
+        options = ["rock","paper","scissors"]
+        return options[draw(0,2)]
+        
     #Creates a time delay of 0.8 seconds for switching pages
     def delay(self):
         self.timer = QtCore.QTimer()
