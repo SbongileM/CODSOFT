@@ -38,6 +38,10 @@ class Game():
         self.player_move = ""
         self.computer_move = ""
         
+        #Scoring variables
+        self.player_score = 0
+        self.computer_score = 0
+        
         #Player signal
         self.player_signal = Player_Signal()
         #copying emitted player move into the set_player_move function
@@ -153,13 +157,13 @@ class Game():
     def start(self):
         #sets window to display move selection page
         self.stacked_widget.setCurrentIndex(1)
-        #sets computer move icon for the game over window
-        self.game_over.computer_icon.setStyleSheet(self.set_computer_fighter()) 
         
     #Commences another game round when player clicks the Replay push button 
     def replay(self):
         #sets window to display move selection page
         self.stacked_widget.setCurrentIndex(1)
+        #sets computer move icon for the game over window
+        self.game_over.computer_icon.setStyleSheet(self.set_computer_fighter()) 
         
     #Sets player move when it has been selected
     def set_player_move(self,move):
@@ -213,13 +217,44 @@ class Game():
         if pressed == "rock" or pressed == "paper" or pressed == "scissors":
             #emits signal once player has selected their move
             self.player_signal.emit_signal.emit(pressed)
+            #sets computer move icon for the game over window
+            self.game_over.computer_icon.setStyleSheet(self.set_computer_fighter()) 
             #sets current page to Loading page
             self.stacked_widget.setCurrentIndex(2)
             #Swaps pages until the game over page is reached
             self.delay()
             #Settings for the game over results
             self.game_over.player_icon.setStyleSheet(self.set_player_fighter())
+            self.game_over.outcome.setText(f"<html><head/><body><p><span style=\" font-size:24pt; font-weight:600; color:#55aa00;\"\
+                            >{self.results(self.player_move, self.computer_move)}</span></p></body></html>")
+            self.game_over.computer_score.setText(f"<html><head/><body><p><span style=\" font-size:12pt; font-weight:600; color:#55aa00;\"\
+                                >Computer   : {self.computer_score}</span></p></body></html>")
+            self.game_over.player_score.setText(f"<html><head/><body><p><span style=\" font-size:12pt; font-weight:600; color:#55aa00;\"\
+                                >Player   : {self.player_score}</span></p></body></html>")         
     
+    #Calculates the scores by comparing player move and computer move using the 
+    #rules of the game and displays the outcome which is either You win, You lost,
+    # or It's a draw.
+    def results(self,player,computer):
+        if player == computer:
+           outcome = "It's a tie"
+           self.computer_score += 1
+           self.player_score += 1
+           
+        elif (player == "rock" and computer == "scissors")\
+            or (player == "scissors" and computer == "paper")\
+            or (player == "paper" and computer == "rock"):
+                
+            outcome = "You win! :)"
+            self.computer_score = self.computer_score
+            self.player_score += 1
+           
+        else:
+           outcome = "You lost :("
+           self.computer_score += 1
+           self.player_score = self.player_score
+           
+        return outcome
     
 if __name__ == "__main__":
     import sys
