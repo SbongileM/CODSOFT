@@ -17,17 +17,30 @@ multiple rounds.
 6.Replay for the user if they want to play another round.
 
 '''
-
+from random import randint as draw
 from PyQt5 import QtCore, QtGui, QtWidgets
 import Resources
 from Home import Home
 from Loading import loading
+
+#Emits a signal when the player move has been selected
+class Player_Signal(QtCore.QObject):
+    emit_signal = QtCore.pyqtSignal(str)
 
 
 #Game window class
 class Game():
     def __init__(self,window):
         super().__init__()
+        
+        #String values that copy both player and computer moves
+        self.player_move = ""
+        self.computer_move = ""
+        
+        #Player signal
+        self.player_signal = Player_Signal()
+        #copying emitted player move into the set_player_move function
+        self.player_signal.emit_signal.connect(self.set_player_move)
         
         #Main window settings
         window.setWindowTitle("Rock-Paper-Scissors")
@@ -79,17 +92,17 @@ class Game():
         #Fighter selection page
         self.selection = QtWidgets.QWidget()
         #Rock selection button
-        self.rock = QtWidgets.QPushButton(self.selection)
+        self.rock = QtWidgets.QPushButton(self.selection,clicked = lambda: self.selected("rock"))
         self.rock.setGeometry(QtCore.QRect(10, 10, 181, 181))
         self.rock.setStyleSheet("image: url(:/Icons/rock_left.png);")
         self.rock.setFlat(True)
         #Paper selection button
-        self.paper = QtWidgets.QPushButton(self.selection)
+        self.paper = QtWidgets.QPushButton(self.selection,clicked = lambda: self.selected("paper"))
         self.paper.setGeometry(QtCore.QRect(370, 10, 181, 181))
         self.paper.setStyleSheet("image: url(:/Icons/paper_left.png);")
         self.paper.setFlat(True)
         #Scissors selection button
-        self.scissors = QtWidgets.QPushButton(self.selection)
+        self.scissors = QtWidgets.QPushButton(self.selection,clicked = lambda: self.selected("scissors"))
         self.scissors.setGeometry(QtCore.QRect(200, 280, 181, 181))
         self.scissors.setStyleSheet("image: url(:/Icons/scissors_left.png);")
         self.scissors.setFlat(True)
@@ -130,6 +143,19 @@ class Game():
     def start(self):
         #sets window to display move selection page
         self.stacked_widget.setCurrentIndex(1)
+        
+     #Sets player move when it has been selected
+    def set_player_move(self,move):
+        self.player_move = move
+        
+    #Basically the game loop. It checkes the move the player has selected and then triggers 
+    #or emits the signal, and then sets the game over results.
+    def selected(self,pressed):
+        if pressed == "rock" or pressed == "paper" or pressed == "scissors":
+            #emits signal once player has selected their move
+            self.player_signal.emit_signal.emit(pressed)
+            #sets current page to Loading page
+            self.stacked_widget.setCurrentIndex(2)
     
     
 if __name__ == "__main__":
