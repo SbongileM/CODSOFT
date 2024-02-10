@@ -80,7 +80,7 @@ class WindowSetup():
         self.vertical_layout.addLayout(self.horizontal_layout)
         
         #Delete button settings
-        self.back_space = QtWidgets.QPushButton("<x]")
+        self.back_space = QtWidgets.QPushButton("<x]",clicked = lambda: self.delete())
         self.back_space.setSizePolicy(size_policy)
         self.back_space.setStyleSheet(style)
         self.horizontal_layout_2.addWidget(self.back_space)
@@ -233,6 +233,10 @@ class WindowSetup():
             self.screen.setText(str(answer))
         except:
             self.screen.setText("ERROR")
+            
+    #Back space functionality
+    def delete(self):
+        self.screen.setText((self.screen.text())[:-1])
     
 import Assets
 
