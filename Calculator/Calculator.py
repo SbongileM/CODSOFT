@@ -33,6 +33,22 @@ class WindowSetup():
         self.horizontal_layout_4 = QtWidgets.QHBoxLayout()
         self.horizontal_layout_5 = QtWidgets.QHBoxLayout()
         self.horizontal_ayout_6 = QtWidgets.QHBoxLayout()
+        size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        
+        #Calculator screen font settings
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        font.setBold(False)
+        font.setWeight(50)
+        
+        #Calculator screen settings
+        self.screen = QtWidgets.QLabel("Click on two numbers and an operation")
+        self.screen.setSizePolicy(size_policy)
+        self.screen.setFont(font)
+        self.screen.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.screen.setFrameShape(QtWidgets.QFrame.Box)
+        self.screen.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignVCenter)
+        self.vertical_layout.addWidget(self.screen)
         
         window.setCentralWidget(self.central_widget)
     
