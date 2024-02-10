@@ -48,6 +48,7 @@ class WindowSetup():
         #Calculator screen settings
         self.screen = QtWidgets.QLabel("Click on two numbers and an operation")
         self.screen.setSizePolicy(size_policy)
+        self.screen.setMaximumWidth(600)
         self.screen.setFont(font)
         self.screen.setLayoutDirection(QtCore.Qt.RightToLeft)
         self.screen.setFrameShape(QtWidgets.QFrame.Box)
@@ -90,7 +91,7 @@ class WindowSetup():
         self.horizontal_layout_2.addWidget(self.back_space)
         
         #Square button settings
-        self.square = QtWidgets.QPushButton("x^2")
+        self.square = QtWidgets.QPushButton("x^2",clicked = lambda: self.squared())
         self.square.setSizePolicy(size_policy)
         self.square.setStyleSheet(style)
         self.horizontal_layout_2.addWidget(self.square)
@@ -233,7 +234,7 @@ class WindowSetup():
         input_txt = self.screen.text()
         try:
             answer = eval(input_txt)
-            if type(answer) == float : answer = round(answer,20)
+            if type(answer) == float : answer = round(answer,50)
             self.screen.setText(str(answer))
         except:
             self.screen.setText("ERROR")
@@ -335,6 +336,41 @@ class WindowSetup():
             
         except:
              self.screen.setText("ERROR")
+             
+    #Square functionality
+    #Waits for a number to be pressed first before it functions
+    #Only works for the current number not expressions
+    def squared(self):
+        current_txt = self.screen.text()
+        nums = self.split_up(current_txt)
+        index = 0
+    
+        try:
+            if nums[-1].isdecimal(): 
+                num = int(nums[-1])
+                
+            else : num = float(nums[-1])
+            
+            answer = pow(num,2)
+            
+            if current_txt[-1] == ')':
+                self.screen.setText(current_txt)
+                
+            else:    
+                if '-' in current_txt and current_txt[-len(nums[-1])-1] == '-':
+                    if len(nums) > 1 and current_txt[-len(nums[-1])-2].isdigit():
+                        index = -len(nums[-1])
+                    else:
+                        index = -len(nums[-1])-1
+                    
+                else:  
+                    index = -len(nums[-1])
+            
+                current_txt = current_txt[:index]+ str(answer)   
+                self.screen.setText(current_txt)
+                
+        except:
+            self.screen.setText("ERROR")
     
 import Assets
 
