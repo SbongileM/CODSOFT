@@ -20,6 +20,7 @@ multiple rounds.
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import Resources
+from Home import Home
 
 
 #Game window class
@@ -57,10 +58,37 @@ class Game():
                            >Scissors</span></p></body></html>")
         self.vertical_layout.addWidget(self.title)
         
+        #Buttons font settings
+        button_font = QtGui.QFont()
+        button_font.setBold(True)
+        button_font.setWeight(75)
+        
+        #A stacked widget for pages to display game windows
+        self.stacked_widget = QtWidgets.QStackedWidget(self.centralwidget)
+        
+        #Home page
+        self.home = Home(button_font)
+        self.home_page = self.home.home
+        #connecting quit push button to Qt window close functionality
+        self.home.quit_button.clicked.connect(window.close)
+        #connecting play push button to the game start function
+        self.home.play_button.clicked.connect(self.start)
+        self.stacked_widget.addWidget(self.home_page)
+        
+        #Setting first window to home page
+        self.stacked_widget.setCurrentIndex(0)
+        
+        self.vertical_layout.addWidget(self.stacked_widget)
         window.setCentralWidget(self.centralwidget)
         QtCore.QMetaObject.connectSlotsByName(window)
-      
-   
+     
+    #Game window functionalities
+    
+    #Commences game when player clicks the Play push button 
+    def start(self):
+        pass
+    
+    
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
