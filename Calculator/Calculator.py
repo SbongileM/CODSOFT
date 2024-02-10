@@ -96,7 +96,7 @@ class WindowSetup():
         self.horizontal_layout_2.addWidget(self.square)
         
         #Square root button settings
-        self.root = QtWidgets.QPushButton("√x ")
+        self.root = QtWidgets.QPushButton("√x ",clicked = lambda: self.sqroot())
         self.root.setSizePolicy(size_policy)
         self.root.setStyleSheet(style)
         self.horizontal_layout_2.addWidget(self.root)
@@ -306,6 +306,35 @@ class WindowSetup():
                 
         except:
             self.screen.setText("ERROR")
+            
+    #Square root functionality
+    #Waits for a number to be pressed first before it functions
+    #Only works for the current number not expressions within ()
+    def sqroot(self):
+        current_txt = self.screen.text()
+        nums = self.split_up(current_txt)
+        
+        try:
+            num = float(nums[-1])
+            answer = pow(num,0.5)
+            
+            try:   
+                if current_txt[-len(nums[-1])-1] == '-':
+                    if len(nums) == 1 or current_txt[-len(nums[-1])-2].isdigit() == False:
+                        current_txt = "ERROR"
+                    else:
+                        current_txt = current_txt[:-len(nums[-1])]+ str(answer)
+                        
+                elif current_txt[-len(nums[-1])-1] in '*/+':
+                    current_txt = current_txt[:-len(nums[-1])]+ str(answer)
+                    
+            except IndexError:
+                    current_txt = current_txt[:-len(nums[-1])]+ str(answer)  
+                    
+            self.screen.setText(current_txt)
+            
+        except:
+             self.screen.setText("ERROR")
     
 import Assets
 
