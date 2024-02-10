@@ -21,6 +21,7 @@ multiple rounds.
 from PyQt5 import QtCore, QtGui, QtWidgets
 import Resources
 from Home import Home
+from Loading import loading
 
 
 #Game window class
@@ -75,6 +76,48 @@ class Game():
         self.home.play_button.clicked.connect(self.start)
         self.stacked_widget.addWidget(self.home_page)
         
+        #Fighter selection page
+        self.selection = QtWidgets.QWidget()
+        #Rock selection button
+        self.rock = QtWidgets.QPushButton(self.selection)
+        self.rock.setGeometry(QtCore.QRect(10, 10, 181, 181))
+        self.rock.setStyleSheet("image: url(:/Icons/rock_left.png);")
+        self.rock.setFlat(True)
+        #Paper selection button
+        self.paper = QtWidgets.QPushButton(self.selection)
+        self.paper.setGeometry(QtCore.QRect(370, 10, 181, 181))
+        self.paper.setStyleSheet("image: url(:/Icons/paper_left.png);")
+        self.paper.setFlat(True)
+        #Scissors selection button
+        self.scissors = QtWidgets.QPushButton(self.selection)
+        self.scissors.setGeometry(QtCore.QRect(200, 280, 181, 181))
+        self.scissors.setStyleSheet("image: url(:/Icons/scissors_left.png);")
+        self.scissors.setFlat(True)
+        #Selection instruction label
+        self.select = QtWidgets.QLabel(self.selection)
+        self.select.setFont(font)
+        self.select.setText("<html><head/><body><p><span style=\" font-size:24pt; font-weight:600; color:#55aa00;\"\
+                            >Pick your fighter</span></p></body></html>")
+        self.select.setGeometry(QtCore.QRect(140, 210, 291, 41))
+        #Selection page quit button
+        self.quit_button = QtWidgets.QPushButton(self.selection)
+        #connecting quit push button to Qt window close functionality
+        self.quit_button.clicked.connect(window.close)
+        self.quit_button.setText("Quit")
+        self.quit_button.setGeometry(QtCore.QRect(500, 470, 75, 23))
+        self.quit_button.setFont(button_font)
+        self.quit_button.setStyleSheet("color: rgb(213, 0, 106);")
+        self.stacked_widget.addWidget(self.selection)
+        
+        #Loading page
+        self.loading = loading(font)
+        #First Loading page
+        self.loading1 = self.loading.Loading1
+        self.stacked_widget.addWidget(self.loading1)
+        #Second Loading Page
+        self.loading2 = self.loading.Loading2
+        self.stacked_widget.addWidget(self.loading2)
+        
         #Setting first window to home page
         self.stacked_widget.setCurrentIndex(0)
         
@@ -82,11 +125,11 @@ class Game():
         window.setCentralWidget(self.centralwidget)
         QtCore.QMetaObject.connectSlotsByName(window)
      
-    #Game window functionalities
-    
+    #Game window functions
     #Commences game when player clicks the Play push button 
     def start(self):
-        pass
+        #sets window to display move selection page
+        self.stacked_widget.setCurrentIndex(1)
     
     
 if __name__ == "__main__":
