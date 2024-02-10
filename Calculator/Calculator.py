@@ -234,8 +234,10 @@ class WindowSetup():
         input_txt = self.screen.text()
         try:
             answer = eval(input_txt)
-            if type(answer) == float : answer = round(answer,50)
-            self.screen.setText(str(answer))
+            if len(str(answer)) > 4:
+                self.screen.setText(str(format(answer,"e")))
+            else:
+                self.screen.setText(str(answer)) 
         except:
             self.screen.setText("ERROR")
             
