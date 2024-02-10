@@ -188,7 +188,7 @@ class WindowSetup():
         self.vertical_layout.addLayout(self.horizontal_layout_5)
         
         #Plus or minus button settings
-        self.negative_sign = QtWidgets.QPushButton("+/-")
+        self.negative_sign = QtWidgets.QPushButton("+/-",clicked = lambda: self.plus_minus())
         self.negative_sign.setSizePolicy(size_policy)
         self.negative_sign.setStyleSheet(style)
         self.horizontal_layout_6.addWidget(self.negative_sign)
@@ -200,7 +200,7 @@ class WindowSetup():
         self.horizontal_layout_6.addWidget(self.zero)
         
         #Decimal point settings
-        self.point = QtWidgets.QPushButton(".",clicked = lambda: self.decPoint())
+        self.point = QtWidgets.QPushButton(".",clicked = lambda: self.dec_point())
         self.point.setSizePolicy(size_policy)
         self.point.setStyleSheet(style)
         self.horizontal_layout_6.addWidget(self.point)
@@ -249,7 +249,7 @@ class WindowSetup():
         return split(r'\d+\.\d+|\d+|\.',input_)
     
     #Decimal point functionality
-    def decPoint(self):
+    def dec_point(self):
         try:
             if "." in self.split_up(self.screen.text())[-1]:
                 pass
@@ -258,6 +258,31 @@ class WindowSetup():
         except:
             self.screen.setText("ERROR")
             
+    #Negative/Positive
+    #Waits for a number to be pressed first before it functions
+    #Does not work for an expression within a set of (), only works for the current number
+    def plus_minus(self):
+        current_txt = self.screen.text()
+        nums = self.split_up(current_txt)
+        
+        try:
+            if len(nums) > 0 :
+                current = nums[-1]
+            
+                if '-' in current_txt[-len(current)-1:] and current_txt[-1].isdigit():
+                  
+                    if len(nums) > 1 and current_txt[-len(current)-2].isdigit():
+                        current_txt =current_txt.replace(current_txt[-len(current)-1],'+')
+                    else:
+                        current_txt = current_txt.replace(current_txt[-len(current)-1],'')
+        
+                elif current_txt[-1].isdigit():
+                    current_txt = current_txt[:-len(current)] + '-' + current_txt[-len(current):]
+                
+            self.screen.setText(current_txt)
+            
+        except ValueError:
+            self.screen.setText(current_txt)#do not make any changes
     
 import Assets
 
