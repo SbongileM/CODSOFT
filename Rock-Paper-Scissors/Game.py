@@ -144,9 +144,26 @@ class Game():
         #sets window to display move selection page
         self.stacked_widget.setCurrentIndex(1)
         
-     #Sets player move when it has been selected
+    #Sets player move when it has been selected
     def set_player_move(self,move):
         self.player_move = move
+        
+    #Creates a time delay of 0.8 seconds for switching pages
+    def delay(self):
+        self.timer = QtCore.QTimer()
+        self.timer.start(800)
+        self.timer.timeout.connect(self.switch_pages)
+    
+    #Works together with the delay function to swap game pages    
+    def switch_pages(self):
+        index = self.stacked_widget.currentIndex()
+
+        if index == 2:
+            self.stacked_widget.setCurrentIndex(3)
+        elif index == 3:
+            self.stacked_widget.setCurrentIndex(4)
+        else:
+            self.stacked_widget.setCurrentIndex(index)
         
     #Basically the game loop. It checkes the move the player has selected and then triggers 
     #or emits the signal, and then sets the game over results.
@@ -156,6 +173,8 @@ class Game():
             self.player_signal.emit_signal.emit(pressed)
             #sets current page to Loading page
             self.stacked_widget.setCurrentIndex(2)
+            #Swaps pages until the game over page is reached
+            self.delay()
     
     
 if __name__ == "__main__":
