@@ -212,6 +212,17 @@ class WindowSetup():
         self.vertical_layout.addLayout(self.horizontal_layout_6)
         
         window.setCentralWidget(self.central_widget)
+        
+        
+    #General button functionality        
+    def pressed(self, button):
+        if button == "C":
+            self.screen.setText("")
+            
+        elif self.screen.text() == "Click on two numbers and an operation":
+            self.screen.setText(button)
+        else:
+            self.screen.setText(f'{self.screen.text()}{button}')
     
 import Assets
 
