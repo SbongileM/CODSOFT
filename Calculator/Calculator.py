@@ -11,8 +11,10 @@ However, the functionality of the added operations is limited to only the curren
 and does not work for an expression within a pair of parethesis. For example, sqrt(8+9).
 
 '''
-from PyQt5 import QtCore, QtGui, QtWidgets
+
 from re import findall as split
+from PyQt5 import QtCore, QtGui, QtWidgets
+import Assets
 
 class WindowSetup():
     def __init__(self, window):
@@ -37,7 +39,8 @@ class WindowSetup():
         self.horizontal_layout_4 = QtWidgets.QHBoxLayout()
         self.horizontal_layout_5 = QtWidgets.QHBoxLayout()
         self.horizontal_layout_6 = QtWidgets.QHBoxLayout()
-        size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, \
+                                            QtWidgets.QSizePolicy.Preferred)
         
         #Calculator screen font settings
         font = QtGui.QFont()
@@ -323,7 +326,7 @@ class WindowSetup():
             
             try:   
                 if current_txt[-len(nums[-1])-1] == '-':
-                    if len(nums) == 1 or current_txt[-len(nums[-1])-2].isdigit() == False:
+                    if len(nums) == 1 or current_txt[-len(nums[-1])-2].isdigit() is False:
                         current_txt = "ERROR"
                     else:
                         current_txt = current_txt[:-len(nums[-1])]+ str(answer)
@@ -332,7 +335,7 @@ class WindowSetup():
                     current_txt = current_txt[:-len(nums[-1])]+ str(answer)
                     
             except IndexError:
-                    current_txt = current_txt[:-len(nums[-1])]+ str(answer)  
+                current_txt = current_txt[:-len(nums[-1])]+ str(answer)  
                     
             self.screen.setText(current_txt)
             
@@ -373,8 +376,6 @@ class WindowSetup():
                 
         except:
             self.screen.setText("ERROR")
-    
-import Assets
 
 if __name__ == "__main__":
     import sys
