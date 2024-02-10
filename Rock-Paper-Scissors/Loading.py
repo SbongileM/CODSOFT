@@ -3,7 +3,7 @@ from PyQt5 import QtCore, QtWidgets
 class loading():
     def __init__(self,font):
         super().__init__()
-        
+
         #First Loading page
         self.Loading1 = QtWidgets.QWidget()
         

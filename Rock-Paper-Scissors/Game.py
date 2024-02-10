@@ -22,6 +22,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import Resources
 from Home import Home
 from Loading import loading
+from GameOver import gameOver
 
 #Emits a signal when the player move has been selected
 class Player_Signal(QtCore.QObject):
@@ -131,6 +132,15 @@ class Game():
         self.loading2 = self.loading.Loading2
         self.stacked_widget.addWidget(self.loading2)
         
+        #Game over page
+        self.game_over = gameOver(font,button_font)
+        self.game_over_page = self.game_over.game_over
+        #connecting quit push button to Qt window close functionality
+        self.game_over.quit_button.clicked.connect(window.close)
+        #connecting replay push button to replay the game
+        self.game_over.replay_button.clicked.connect(self.replay)
+        self.stacked_widget.addWidget(self.game_over_page)
+        
         #Setting first window to home page
         self.stacked_widget.setCurrentIndex(0)
         
@@ -141,6 +151,11 @@ class Game():
     #Game window functions
     #Commences game when player clicks the Play push button 
     def start(self):
+        #sets window to display move selection page
+        self.stacked_widget.setCurrentIndex(1)
+        
+    #Commences another game round when player clicks the Replay push button 
+    def replay(self):
         #sets window to display move selection page
         self.stacked_widget.setCurrentIndex(1)
         
@@ -165,8 +180,8 @@ class Game():
         else:
             self.stacked_widget.setCurrentIndex(index)
         
-    #Basically the game loop. It checkes the move the player has selected and then triggers 
-    #or emits the signal, and then sets the game over results.
+    #Basically the game loop. It checkes the move the player has selected, 
+    #emits the signal, and then set the game over results.
     def selected(self,pressed):
         if pressed == "rock" or pressed == "paper" or pressed == "scissors":
             #emits signal once player has selected their move
