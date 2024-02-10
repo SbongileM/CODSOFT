@@ -76,10 +76,10 @@ class WindowSetup():
         self.horizontal_layout.addWidget(self.Rparenthesis)
         
         #Percentage button settings
-        self.percentage = QtWidgets.QPushButton("%")
-        self.percentage.setSizePolicy(size_policy)
-        self.percentage.setStyleSheet(style)
-        self.horizontal_layout.addWidget(self.percentage)
+        self.percentage_ = QtWidgets.QPushButton("%",clicked = lambda: self.percent())
+        self.percentage_.setSizePolicy(size_policy)
+        self.percentage_.setStyleSheet(style)
+        self.horizontal_layout.addWidget(self.percentage_)
         
         self.vertical_layout.addLayout(self.horizontal_layout)
         
@@ -283,6 +283,29 @@ class WindowSetup():
             
         except ValueError:
             self.screen.setText(current_txt)#do not make any changes
+            
+    #Percentage functionality  
+    #Only works for the current number, not for an expression
+    def percent(self):
+        current_txt = self.screen.text()
+        nums = self.split_up(current_txt)
+        
+        try:
+            if nums[-1].isdecimal(): 
+                num = int(nums[-1])
+            else : 
+                num = float(nums[-1])
+            
+            answer = num/100
+            
+            if current_txt[-1] in ')*/-+':
+                self.screen.setText(current_txt)#do not make any changes
+            else:
+                i = -len(nums[-1])
+                self.screen.setText(current_txt[:i]+str(answer))
+                
+        except:
+            self.screen.setText("ERROR")
     
 import Assets
 
