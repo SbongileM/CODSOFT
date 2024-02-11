@@ -1,74 +1,72 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
-
-
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
-        Dialog.resize(277, 364)
-        self.gridLayout = QtWidgets.QGridLayout(Dialog)
-        self.gridLayout.setObjectName("gridLayout")
-        self.task_name = QtWidgets.QLabel(Dialog)
-        self.task_name.setObjectName("task_name")
-        self.gridLayout.addWidget(self.task_name, 0, 0, 1, 1)
-        self.add_today = QtWidgets.QPushButton(Dialog)
-        self.add_today.setCheckable(True)
-        self.add_today.setAutoExclusive(True)
-        self.add_today.setObjectName("add_today")
-        self.gridLayout.addWidget(self.add_today, 2, 0, 1, 1)
-        self.save = QtWidgets.QPushButton(Dialog)
-        self.save.setCheckable(True)
-        self.save.setAutoExclusive(True)
-        self.save.setObjectName("save")
-        self.gridLayout.addWidget(self.save, 7, 2, 1, 1)
-        self.important = QtWidgets.QPushButton(Dialog)
-        self.important.setCheckable(True)
-        self.important.setAutoExclusive(True)
-        self.important.setObjectName("important")
-        self.gridLayout.addWidget(self.important, 1, 0, 1, 1)
-        spacerItem = QtWidgets.QSpacerItem(176, 71, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout.addItem(spacerItem, 6, 0, 1, 2)
-        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout.addItem(spacerItem1, 3, 0, 1, 1)
-        self.cancel = QtWidgets.QPushButton(Dialog)
-        self.cancel.setCheckable(True)
-        self.cancel.setAutoExclusive(True)
-        self.cancel.setObjectName("cancel")
-        self.gridLayout.addWidget(self.cancel, 7, 1, 1, 1)
-        self.delete_task = QtWidgets.QPushButton(Dialog)
-        self.delete_task.setCheckable(True)
-        self.delete_task.setAutoExclusive(True)
-        self.delete_task.setObjectName("delete_task")
-        self.gridLayout.addWidget(self.delete_task, 0, 2, 1, 1)
-        self.task_notes = QtWidgets.QLabel(Dialog)
-        self.task_notes.setObjectName("task_notes")
-        self.gridLayout.addWidget(self.task_notes, 4, 0, 1, 1)
-        self.notes_edit = QtWidgets.QTextEdit(Dialog)
-        self.notes_edit.setMaximumSize(QtCore.QSize(300, 700))
-        self.notes_edit.setObjectName("notes_edit")
-        self.gridLayout.addWidget(self.notes_edit, 5, 0, 1, 3)
-
-        self.retranslateUi(Dialog)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
-
-    def retranslateUi(self, Dialog):
-        _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
-        self.task_name.setText(_translate("Dialog", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Task</span></p></body></html>"))
-        self.add_today.setText(_translate("Dialog", "Add to Today"))
-        self.save.setText(_translate("Dialog", "Save"))
-        self.important.setText(_translate("Dialog", " Mark as important"))
-        self.cancel.setText(_translate("Dialog", "Cancel"))
-        self.delete_task.setText(_translate("Dialog", "Delete"))
-        self.task_notes.setText(_translate("Dialog", "Add notes"))
-
+from PyQt5 import QtCore, QtWidgets, QtGui
 import Assets
 
+class Task_Window():
+    def __init__(self, dialog):
+        super().__init__()
+        dialog.setWindowTitle("Task Edit Window")
+        dialog.resize(277, 364)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/Icons/Icons/To-do.png"))
+        dialog.setWindowIcon(icon)
+        
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        
+        self.grid_layout = QtWidgets.QGridLayout(dialog)
+
+        self.task_name = QtWidgets.QLabel(dialog)
+        self.task_name.setText("<html><head/><body><p><span style=\" \
+                                font-size:14pt; font-weight:600;\"\
+                                    >Task</span></p></body></html>")
+        self.grid_layout.addWidget(self.task_name, 0, 0, 1, 1)
+        
+        self.add_today = QtWidgets.QPushButton(dialog)
+        self.add_today.setText("Add to Today")
+        self.add_today.setFont(font)
+        self.grid_layout.addWidget(self.add_today, 2, 0, 1, 1)
+        
+        self.save = QtWidgets.QPushButton(dialog)
+        self.save.setText("Save")
+        self.save.setFont(font)
+        self.grid_layout.addWidget(self.save, 7, 2, 1, 1)
+        
+        self.important = QtWidgets.QPushButton(dialog)
+        self.important.setText("Mark as important")
+        self.important.setFont(font)
+        self.grid_layout.addWidget(self.important, 1, 0, 1, 1)
+        
+        spacer = QtWidgets.QSpacerItem(176, 71, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.grid_layout.addItem(spacer, 6, 0, 1, 2)
+        spacer1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.grid_layout.addItem(spacer1, 3, 0, 1, 1)
+        
+        self.cancel = QtWidgets.QPushButton(dialog)
+        self.cancel.setText("Cancel")
+        self.cancel.setFont(font)
+        self.grid_layout.addWidget(self.cancel, 7, 1, 1, 1)
+        
+        self.delete_task = QtWidgets.QPushButton(dialog)
+        self.delete_task.setText("Delete")
+        self.delete_task.setFont(font)
+        self.grid_layout.addWidget(self.delete_task, 0, 2, 1, 1)
+        
+        self.task_notes = QtWidgets.QLabel(dialog)
+        self.task_notes.setText("Add notes")
+        self.task_notes.setFont(font)
+        self.grid_layout.addWidget(self.task_notes, 4, 0, 1, 1)
+        
+        self.notes_edit = QtWidgets.QTextEdit(dialog)
+        self.notes_edit.setFont(font)
+        self.notes_edit.setMaximumSize(QtCore.QSize(300, 700))
+        self.grid_layout.addWidget(self.notes_edit, 5, 0, 1, 3)
+
+        QtCore.QMetaObject.connectSlotsByName(dialog)
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    Dialog = QtWidgets.QDialog()
-    ui = Ui_Dialog()
-    ui.setupUi(Dialog)
-    Dialog.show()
+    dialog = QtWidgets.QDialog()
+    ui = Task_Window(dialog)
+    dialog.show()
     sys.exit(app.exec_())
