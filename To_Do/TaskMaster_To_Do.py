@@ -2,8 +2,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from List_ui_structure import Page
 from Menu_bar import Menu
 import Assets
-
-
+class Signal(QtCore.QObject):
+    signal = QtCore.pyqtSignal(str)
 class New_Button():
     def __init__(self,icon,font):
         self.window = QtWidgets.QMainWindow()
@@ -24,14 +24,12 @@ class New_Button():
         self.save.setMaximumWidth(50)
         self.grid_layout.addWidget(self.save, 1, 1, 1, 1)
         
-        self.window.setCentralWidget(self.centralwidget)
-        
-class Signal(QtCore.QObject):
-    signal = QtCore.pyqtSignal(str)
-        
+        self.window.setCentralWidget(self.centralwidget)    
 class Main_Window():
     def __init__(self, window):
         super().__init__()
+        
+        self.lists = []
         #window setup
         window.setWindowTitle("TaskMaster To-Do")
         window.resize(880, 600)
@@ -69,6 +67,7 @@ class Main_Window():
         window.setCentralWidget(self.centralwidget)
         #Connect all current buttons to the selected function
         self.connect_slots()
+        self.connect_add_item()
         #Set initial page to today's list
         self.MainWindow.setCurrentIndex(0)
         self.menu.today_button.setChecked(True)
@@ -96,6 +95,7 @@ class Main_Window():
         self.menu.vertical_layout.addWidget(new_button)
         #Update signals accepted by the selected function
         self.connect_slots()
+        self.connect_add_item()
          
     #Shows the new list name edit window when new_list button is selected
     def new_list(self):
@@ -108,6 +108,7 @@ class Main_Window():
         title.setText(f"<html><head/><body><p><span style=\"\
                     font-size:14pt; font-weight:600;\">{name}</span></p></body></html>")
         self.MainWindow.addWidget(list_.page)
+        self.lists.append(list_)
         
     #Creates all pages currently saved into the data base
     def create_pages(self):
@@ -124,6 +125,16 @@ class Main_Window():
     def connect_slots(self):
         for i in range(len(self.menu.buttons_list)):
             self.menu.buttons_list[i].clicked.connect(lambda: self.selected())
+            
+    def add_item(self):
+        index = self.MainWindow.currentIndex()
+        item = self.lists[index].new_task_edit.text()
+        self.lists[index].task_list.addItem(item)
+        item = self.lists[index].new_task_edit.setText("")
+        
+    def connect_add_item(self):
+        for i in range(len(self.lists)):
+            self.lists[i].add_task_button.clicked.connect(lambda:self.add_item())
                                   
 if __name__ == "__main__":
     import sys

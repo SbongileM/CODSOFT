@@ -19,6 +19,7 @@ class Page():
         self.grid_layout.addWidget(self.new_task_edit, 3, 0, 1, 2)
         
         self.task_list = QtWidgets.QListWidget(self.page)
+        self.task_list.setFont(font)
         self.task_list.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.task_list.setSortingEnabled(True)
         self.grid_layout.addWidget(self.task_list, 1, 0, 1, 3)
