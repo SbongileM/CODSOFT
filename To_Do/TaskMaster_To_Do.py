@@ -1,9 +1,19 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from List_ui_structure import Page
 from Menu_bar import Menu
+from Task_window import Task_Window
 import Assets
 class Signal(QtCore.QObject):
     signal = QtCore.pyqtSignal(str)
+    
+class List_Signal(QtWidgets.QListWidget):
+    signal = QtCore.pyqtSignal(str)
+    
+    def mousePressEvent(self,event):
+        task = self.itemAt(event.pos())
+        if task:
+            self.signal.emit(task.text())
+        super().mousePressEvent(event)
 class New_Button():
     def __init__(self,icon,font):
         self.window = QtWidgets.QMainWindow()
@@ -130,16 +140,23 @@ class Main_Window():
         index = self.MainWindow.currentIndex()
         item = self.lists[index].new_task_edit.text()
         self.lists[index].task_list.addItem(item)
-        item = self.lists[index].new_task_edit.setText("")
+        self.lists[index].new_task_edit.setText("")
     
     def clear_list(self):
         index = self.MainWindow.currentIndex()
         self.lists[index].task_list.clear()
         
+    def open_task_window(self): 
+        index = self.MainWindow.currentIndex()
+        item = self.lists[index].task_list.currentRow() 
+        self.task_window = Task_Window(f"Task#{item+1}")
+        self.task_window.window.show()
+        
     def connect_list_buttons(self):
         for i in range(len(self.lists)):
             self.lists[i].add_task_button.clicked.connect(lambda:self.add_item())
             self.lists[i].clear_list_button.clicked.connect(lambda:self.clear_list())
+            self.lists[i].task_list.itemClicked.connect(self.open_task_window)
                                        
 if __name__ == "__main__":
     import sys

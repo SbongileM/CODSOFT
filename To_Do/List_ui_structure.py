@@ -21,7 +21,6 @@ class Page():
         self.task_list = QtWidgets.QListWidget(self.page)
         self.task_list.setFont(font)
         self.task_list.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.task_list.setSortingEnabled(True)
         self.grid_layout.addWidget(self.task_list, 1, 0, 1, 3)
         
         self.clear_list_button = QtWidgets.QPushButton(self.page)
@@ -38,7 +37,6 @@ class Page():
         icon.addPixmap(QtGui.QPixmap(":/Icons/Icons/add.png"))
         self.add_task_button.setIcon(icon)
         self.add_task_button.setCheckable(True)
-        self.add_task_button.setAutoExclusive(True)
         self.add_task_button.setFlat(True)
         self.grid_layout.addWidget(self.add_task_button, 3, 2, 1, 1)
         
