@@ -140,6 +140,7 @@ class Main_Window():
         index = self.MainWindow.currentIndex()
         item = self.lists[index].new_task_edit.text()
         self.lists[index].task_list.addItem(item)
+        self.lists[2].task_list.addItem(item)
         self.lists[index].new_task_edit.setText("")
     
     def clear_list(self):
