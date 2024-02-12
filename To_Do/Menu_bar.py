@@ -74,7 +74,7 @@ class Menu():
         self.today_button.setFlat(True)
         self.vertical_layout.addWidget(self.today_button)
         
-        self.buttons_list.append(self.today_button.text())
+        self.buttons_list.append(self.today_button)
         
         #Important list button setup
         self.important_button = QtWidgets.QPushButton(self.menu_bar)
@@ -88,7 +88,7 @@ class Menu():
         self.important_button.setFlat(True)
         self.vertical_layout.addWidget(self.important_button)
         
-        self.buttons_list.append(self.important_button.text())
+        self.buttons_list.append(self.important_button)
         
         #All list button setup
         self.all_button = QtWidgets.QPushButton(self.menu_bar)
@@ -102,7 +102,7 @@ class Menu():
         self.all_button.setFlat(True)
         self.vertical_layout.addWidget(self.all_button)
         
-        self.buttons_list.append(self.all_button.text())
+        self.buttons_list.append(self.all_button)
         
         #Comleted tasks list button setup
         self.complete_button = QtWidgets.QPushButton(self.menu_bar)
@@ -116,13 +116,7 @@ class Menu():
         self.complete_button.setFlat(True)
         self.vertical_layout.addWidget(self.complete_button)
         
-        self.buttons_list.append(self.complete_button.text())
-        
-        #Seperator
-        self.line = QtWidgets.QFrame(self.menu_bar)
-        self.line.setFrameShape(QtWidgets.QFrame.HLine)
-        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.vertical_layout.addWidget(self.line)
+        self.buttons_list.append(self.complete_button)
         
         #Work related list button
         self.work_button = QtWidgets.QPushButton(self.menu_bar)
@@ -136,7 +130,7 @@ class Menu():
         self.work_button.setFlat(True)
         self.vertical_layout.addWidget(self.work_button)
         
-        self.buttons_list.append(self.work_button.text())
+        self.buttons_list.append(self.work_button)
         
         #Workout list button
         self.exercise_button = QtWidgets.QPushButton(self.menu_bar)
@@ -150,7 +144,7 @@ class Menu():
         self.exercise_button.setFlat(True)
         self.vertical_layout.addWidget(self.exercise_button)
         
-        self.buttons_list.append(self.exercise_button.text())
+        self.buttons_list.append(self.exercise_button)
         
         #Shopping list button
         self.shopping_button = QtWidgets.QPushButton(self.menu_bar)
@@ -164,7 +158,7 @@ class Menu():
         self.shopping_button.setFlat(True)
         self.vertical_layout.addWidget(self.shopping_button)
         
-        self.buttons_list.append(self.shopping_button.text())
+        self.buttons_list.append(self.shopping_button)
         
         self.grid_layout.addLayout(self.vertical_layout, 4, 0, 1, 2)
         

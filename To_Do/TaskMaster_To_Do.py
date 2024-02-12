@@ -49,6 +49,7 @@ class Main_Window():
         self.title_font = QtGui.QFont()
         self.title_font.setFamily("Yu Gothic UI Light")
         
+        #Signal for creation of a new list
         self.emit_ = Signal()
         self.emit_.signal.connect(self.create_new_list)
         
@@ -59,78 +60,27 @@ class Main_Window():
         self.menu = Menu(self.font,window)
         self.menu_bar = self.menu.menu_bar
         self.menu.add_list_button.clicked.connect(self.new_list)
-        
         self.grid_layout.addWidget(self.menu_bar, 0, 0, 1, 1)
-        
+        #Stacked widget for list pages
         self.MainWindow = QtWidgets.QStackedWidget(self.centralwidget)
-        
-        #Today's to do list setup
-        self.today = Page(self.font,self.title_font)
-        self.today_list = self.today.page
-        self.today_list_title = self.today.list_title
-        self.today_list_title.setText("<html><head/><body><p><span style=\"\
-                            font-size:14pt; font-weight:600;\">Today</span></p></body></html>")
-        self.MainWindow.addWidget(self.today_list)
-        
-        #Important items list setup
-        self.important_ = Page(self.font,self.title_font)
-        self.important_list = self.important_.page
-        self.important_list_title = self.important_.list_title
-        self.important_list_title.setText("<html><head/><body><p><span style=\" \
-                        font-size:14pt; font-weight:600;\">Important</span></p></body></html>")
-        self.MainWindow.addWidget(self.important_list)
-        
-        #All planned items list setup
-        self.all = Page(self.font,self.title_font)
-        self.all_list = self.all.page
-        self.all_list_title = self.all.list_title
-        self.all_list_title.setText("<html><head/><body><p><span style=\"\
-                            font-size:14pt; font-weight:600;\">All</span></p></body></html>")
-        self.MainWindow.addWidget(self.all_list)
-        
-        #Completed items list setup
-        self.completed = QtWidgets.QWidget()
-        self.grid_layout_2 = QtWidgets.QGridLayout(self.completed)
-        
-        self.completed_list_title = QtWidgets.QLabel(self.completed)
-        self.completed_list_title.setFont(self.title_font)
-        self.completed_list_title.setText("<html><head/><body><p><span style=\"\
-                    font-size:14pt; font-weight:600;\">Mastered</span></p></body></html>")
-        self.grid_layout_2.addWidget(self.completed_list_title, 0, 0, 1, 1)
-        
-        spacer2 = QtWidgets.QSpacerItem(169, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.grid_layout_2.addItem(spacer2, 0, 1, 1, 1)
-        
-        self.clear_list_button_4 = QtWidgets.QPushButton(self.completed)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/Icons/Icons/bin.png"))
-        self.clear_list_button_4.setIcon(icon)
-        self.clear_list_button_4.setFlat(True)
-        self.grid_layout_2.addWidget(self.clear_list_button_4, 0, 2, 1, 1)
-        
-        self.complete_list = QtWidgets.QListWidget(self.completed)
-        self.complete_list.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.grid_layout_2.addWidget(self.complete_list, 1, 0, 1, 3)
-        
-        self.line = QtWidgets.QFrame(self.completed)
-        self.line.setFrameShape(QtWidgets.QFrame.HLine)
-        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.grid_layout_2.addWidget(self.line, 2, 0, 1, 3)
-        
-        #Updating window layout settings
-        self.MainWindow.addWidget(self.completed)
+        #Create list pages
+        self.create_pages()
         self.grid_layout.addWidget(self.MainWindow, 0, 1, 1, 1)
         window.setCentralWidget(self.centralwidget)
-        
+        #Connect all current buttons to the selected function
+        self.connect_slots()
+        #Set initial page to today's list
         self.MainWindow.setCurrentIndex(0)
         self.menu.today_button.setChecked(True)
         QtCore.QMetaObject.connectSlotsByName(window)
         
+    #Emits signal containing the name of a new list that has been created
     def fetch_new_list_name(self):
         self.emit_.signal.emit(self.new_list_window.name_box.text())
         self.new_list_window.window.close()
         self.new_list_window.name_box.setText("")
         
+    #Creates a new list button and page
     def create_new_list(self,txt):
         new_button = QtWidgets.QPushButton(self.menu.menu_bar)
         new_button.setText(txt)
@@ -141,15 +91,40 @@ class Main_Window():
         new_button.setCheckable(True)
         new_button.setAutoExclusive(True)
         new_button.setFlat(True)
-        self.menu.buttons_list.append(new_button.text())
+        self.menu.buttons_list.append(new_button)
+        self.create_page(txt)
         self.menu.vertical_layout.addWidget(new_button)
+        #Update signals accepted by the selected function
+        self.connect_slots()
          
+    #Shows the new list name edit window when new_list button is selected
     def new_list(self):
-        print(self.menu.buttons_list)
         self.new_list_window.window.show()
         
-    # def selected():
-            
+    #Creates a list page
+    def create_page(self,name):
+        list_ = Page(self.font,self.title_font)
+        title = list_.list_title
+        title.setText(f"<html><head/><body><p><span style=\"\
+                    font-size:14pt; font-weight:600;\">{name}</span></p></body></html>")
+        self.MainWindow.addWidget(list_.page)
+        
+    #Creates all pages currently saved into the data base
+    def create_pages(self):
+        for button in self.menu.buttons_list:
+            self.create_page(button.text())
+     
+    #Slot for connecting button clicked signal to display corresponding list
+    def selected(self):
+        index = self.menu.vertical_layout.indexOf(self.centralwidget.sender())
+        self.menu.buttons_list[index].setChecked(True)
+        self.MainWindow.setCurrentIndex(index)
+        
+    #Connect all the menu buttons to selected function
+    def connect_slots(self):
+        for i in range(len(self.menu.buttons_list)):
+            self.menu.buttons_list[i].clicked.connect(lambda: self.selected())
+                                  
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
