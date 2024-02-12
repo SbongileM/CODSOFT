@@ -148,8 +148,10 @@ class Main_Window():
         
     def open_task_window(self): 
         index = self.MainWindow.currentIndex()
-        item = self.lists[index].task_list.currentRow() 
-        self.task_window = Task_Window(f"Task#{item+1}")
+        item = self.lists[index].task_list.currentItem().text()
+        item_no = self.lists[index].task_list.currentRow() 
+        self.task_window = Task_Window(f"Task#{item_no+1}")
+        self.task_window.important.clicked.connect(lambda:self.mark_task_as_important(item))
         self.task_window.window.show()
         
     def connect_list_buttons(self):
@@ -157,6 +159,9 @@ class Main_Window():
             self.lists[i].add_task_button.clicked.connect(lambda:self.add_item())
             self.lists[i].clear_list_button.clicked.connect(lambda:self.clear_list())
             self.lists[i].task_list.itemClicked.connect(self.open_task_window)
+            
+    def mark_task_as_important(self,item):
+        self.lists[1].task_list.addItem(item)
                                        
 if __name__ == "__main__":
     import sys
