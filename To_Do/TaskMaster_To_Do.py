@@ -67,7 +67,7 @@ class Main_Window():
         window.setCentralWidget(self.centralwidget)
         #Connect all current buttons to the selected function
         self.connect_slots()
-        self.connect_add_item()
+        self.connect_list_buttons()
         #Set initial page to today's list
         self.MainWindow.setCurrentIndex(0)
         self.menu.today_button.setChecked(True)
@@ -95,7 +95,7 @@ class Main_Window():
         self.menu.vertical_layout.addWidget(new_button)
         #Update signals accepted by the selected function
         self.connect_slots()
-        self.connect_add_item()
+        self.connect_list_buttons()
          
     #Shows the new list name edit window when new_list button is selected
     def new_list(self):
@@ -131,11 +131,16 @@ class Main_Window():
         item = self.lists[index].new_task_edit.text()
         self.lists[index].task_list.addItem(item)
         item = self.lists[index].new_task_edit.setText("")
+    
+    def clear_list(self):
+        index = self.MainWindow.currentIndex()
+        self.lists[index].task_list.clear()
         
-    def connect_add_item(self):
+    def connect_list_buttons(self):
         for i in range(len(self.lists)):
             self.lists[i].add_task_button.clicked.connect(lambda:self.add_item())
-                                  
+            self.lists[i].clear_list_button.clicked.connect(lambda:self.clear_list())
+                                       
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
