@@ -3,7 +3,6 @@ from PyQt5 import QtGui, QtWidgets,QtCore
 class Menu():
     def __init__(self,font, window):
         super().__init__()
-        
         self.buttons_list = []
         
         #layout settings
@@ -16,8 +15,11 @@ class Menu():
         #Menu bar setup
         self.menu_bar = QtWidgets.QWidget(self.centralwidget)
         self.menu_bar.setMaximumWidth(250)
-        
         self.grid_layout = QtWidgets.QGridLayout(self.menu_bar)
+        
+        #Spacer
+        spacer = QtWidgets.QSpacerItem(20, 50, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.grid_layout.addItem(spacer, 5, 1, 1, 1)
         
         #Menu bar title settings
         self.title_icon = QtWidgets.QLabel(self.menu_bar)
@@ -25,13 +27,11 @@ class Menu():
                                 /></p></body></html>")
         self.title_icon.setMaximumSize(QtCore.QSize(30, 30))
         self.horizontal_layout.addWidget(self.title_icon)
-        
         self.app_title = QtWidgets.QLabel(self.menu_bar)
         self.app_title.setText("<html><head/><body><p><span style=\" font-size:14pt;\"\
                                 >TaskMaster To-Do</span></p></body></html>")
         self.app_title.setMaximumSize(QtCore.QSize(250, 16777215))
         self.horizontal_layout.addWidget(self.app_title)
-        
         self.grid_layout.addLayout(self.horizontal_layout, 0, 0, 1, 2)
         
         #Seperator
@@ -45,7 +45,6 @@ class Menu():
         self.search_box.setFont(font)
         self.search_box.setPlaceholderText("Search...")
         self.horizontal_layout_2.addWidget(self.search_box)
-        
         self.search_button = QtWidgets.QPushButton(self.menu_bar)
         self.search_button.setFont(font)
         icon = QtGui.QIcon()
@@ -53,7 +52,6 @@ class Menu():
         self.search_button.setIcon(icon)
         self.search_button.setFlat(True)
         self.horizontal_layout_2.addWidget(self.search_button)
-        
         self.grid_layout.addLayout(self.horizontal_layout_2, 2, 0, 1, 2)
         
         #Seperator
@@ -73,7 +71,6 @@ class Menu():
         self.today_button.setAutoExclusive(True)
         self.today_button.setFlat(True)
         self.vertical_layout.addWidget(self.today_button)
-        
         self.buttons_list.append(self.today_button)
         
         #Important list button setup
@@ -87,7 +84,6 @@ class Menu():
         self.important_button.setAutoExclusive(True)
         self.important_button.setFlat(True)
         self.vertical_layout.addWidget(self.important_button)
-        
         self.buttons_list.append(self.important_button)
         
         #All list button setup
@@ -101,7 +97,6 @@ class Menu():
         self.all_button.setAutoExclusive(True)
         self.all_button.setFlat(True)
         self.vertical_layout.addWidget(self.all_button)
-        
         self.buttons_list.append(self.all_button)
         
         #Comleted tasks list button setup
@@ -115,10 +110,9 @@ class Menu():
         self.complete_button.setAutoExclusive(True)
         self.complete_button.setFlat(True)
         self.vertical_layout.addWidget(self.complete_button)
-        
         self.buttons_list.append(self.complete_button)
         
-        #Work related list button
+        #Work related list button setup
         self.work_button = QtWidgets.QPushButton(self.menu_bar)
         self.work_button.setText("Work")
         self.work_button.setFont(font)
@@ -129,10 +123,9 @@ class Menu():
         self.work_button.setAutoExclusive(True)
         self.work_button.setFlat(True)
         self.vertical_layout.addWidget(self.work_button)
-        
         self.buttons_list.append(self.work_button)
         
-        #Workout list button
+        #Workout list button setup
         self.exercise_button = QtWidgets.QPushButton(self.menu_bar)
         self.exercise_button.setText("Exercise")
         self.exercise_button.setFont(font)
@@ -143,10 +136,9 @@ class Menu():
         self.exercise_button.setAutoExclusive(True)
         self.exercise_button.setFlat(True)
         self.vertical_layout.addWidget(self.exercise_button)
-        
         self.buttons_list.append(self.exercise_button)
         
-        #Shopping list button
+        #Shopping list button setup
         self.shopping_button = QtWidgets.QPushButton(self.menu_bar)
         self.shopping_button.setText("Shopping")
         self.shopping_button.setFont(font)
@@ -157,9 +149,7 @@ class Menu():
         self.shopping_button.setAutoExclusive(True)
         self.shopping_button.setFlat(True)
         self.vertical_layout.addWidget(self.shopping_button)
-        
         self.buttons_list.append(self.shopping_button)
-        
         self.grid_layout.addLayout(self.vertical_layout, 4, 0, 1, 2)
         
         #Scroll bar setup
@@ -168,10 +158,6 @@ class Menu():
         self.scroll_bar.setStyleSheet("")
         self.scroll_bar.setOrientation(QtCore.Qt.Vertical)
         self.grid_layout.addWidget(self.scroll_bar, 4, 2, 2, 1, QtCore.Qt.AlignRight)
-        
-        #Spacer
-        spacer = QtWidgets.QSpacerItem(20, 50, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.grid_layout.addItem(spacer, 5, 1, 1, 1)
         
         #Seperator
         self.line = QtWidgets.QFrame(self.menu_bar)
