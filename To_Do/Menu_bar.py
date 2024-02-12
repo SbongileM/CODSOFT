@@ -4,6 +4,8 @@ class Menu():
     def __init__(self,font, window):
         super().__init__()
         
+        self.buttons_list = []
+        
         #layout settings
         self.centralwidget = QtWidgets.QWidget(window)
         self.horizontal_layout = QtWidgets.QHBoxLayout()
@@ -72,6 +74,8 @@ class Menu():
         self.today_button.setFlat(True)
         self.vertical_layout.addWidget(self.today_button)
         
+        self.buttons_list.append(self.today_button.text())
+        
         #Important list button setup
         self.important_button = QtWidgets.QPushButton(self.menu_bar)
         self.important_button.setText("Important")
@@ -83,6 +87,8 @@ class Menu():
         self.important_button.setAutoExclusive(True)
         self.important_button.setFlat(True)
         self.vertical_layout.addWidget(self.important_button)
+        
+        self.buttons_list.append(self.important_button.text())
         
         #All list button setup
         self.all_button = QtWidgets.QPushButton(self.menu_bar)
@@ -96,11 +102,12 @@ class Menu():
         self.all_button.setFlat(True)
         self.vertical_layout.addWidget(self.all_button)
         
+        self.buttons_list.append(self.all_button.text())
+        
         #Comleted tasks list button setup
         self.complete_button = QtWidgets.QPushButton(self.menu_bar)
         self.complete_button.setText("Mastered")
         self.complete_button.setFont(font)
-        self.all_button.setFont(font)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/Icons/Icons/complete.png")) 
         self.complete_button.setIcon(icon)
@@ -108,6 +115,8 @@ class Menu():
         self.complete_button.setAutoExclusive(True)
         self.complete_button.setFlat(True)
         self.vertical_layout.addWidget(self.complete_button)
+        
+        self.buttons_list.append(self.complete_button.text())
         
         #Seperator
         self.line = QtWidgets.QFrame(self.menu_bar)
@@ -127,6 +136,8 @@ class Menu():
         self.work_button.setFlat(True)
         self.vertical_layout.addWidget(self.work_button)
         
+        self.buttons_list.append(self.work_button.text())
+        
         #Workout list button
         self.exercise_button = QtWidgets.QPushButton(self.menu_bar)
         self.exercise_button.setText("Exercise")
@@ -138,6 +149,8 @@ class Menu():
         self.exercise_button.setAutoExclusive(True)
         self.exercise_button.setFlat(True)
         self.vertical_layout.addWidget(self.exercise_button)
+        
+        self.buttons_list.append(self.exercise_button.text())
         
         #Shopping list button
         self.shopping_button = QtWidgets.QPushButton(self.menu_bar)
@@ -151,16 +164,7 @@ class Menu():
         self.shopping_button.setFlat(True)
         self.vertical_layout.addWidget(self.shopping_button)
         
-        self.new_button = QtWidgets.QPushButton(self.menu_bar)
-        self.new_button.setText("New")
-        self.new_button.setFont(font)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/Icons/Icons/list.png"))
-        self.new_button.setIcon(icon)
-        self.new_button.setCheckable(True)
-        self.new_button.setAutoExclusive(True)
-        self.new_button.setFlat(True)
-        self.vertical_layout.addWidget(self.new_button)
+        self.buttons_list.append(self.shopping_button.text())
         
         self.grid_layout.addLayout(self.vertical_layout, 4, 0, 1, 2)
         
@@ -189,7 +193,6 @@ class Menu():
         icon.addPixmap(QtGui.QPixmap(":/Icons/Icons/add.png"))
         self.add_list_button.setIcon(icon)
         self.add_list_button.setCheckable(True)
-        self.add_list_button.setAutoExclusive(True)
         self.add_list_button.setFlat(True)
         self.grid_layout.addWidget(self.add_list_button, 7, 0, 1, 3)
 

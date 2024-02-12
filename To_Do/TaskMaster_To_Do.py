@@ -4,6 +4,31 @@ from Menu_bar import Menu
 import Assets
 
 
+class New_Button():
+    def __init__(self,icon,font):
+        self.window = QtWidgets.QMainWindow()
+        self.window.setWindowTitle("New list")
+        self.window.setFixedSize(300,100)
+        self.window.setWindowIcon(icon)
+        
+        self.centralwidget = QtWidgets.QWidget(self.window)
+        self.grid_layout = QtWidgets.QGridLayout(self.centralwidget)
+        
+        self.name_box = QtWidgets.QLineEdit(self.window)
+        self.name_box.setFont(font)
+        self.name_box.setPlaceholderText("Rename list")
+        self.grid_layout.addWidget(self.name_box, 0, 0, 0, 0)
+        
+        self.save = QtWidgets.QPushButton("Save")
+        self.save.setFont(font)
+        self.save.setMaximumWidth(50)
+        self.grid_layout.addWidget(self.save, 1, 1, 1, 1)
+        
+        self.window.setCentralWidget(self.centralwidget)
+        
+class Signal(QtCore.QObject):
+    signal = QtCore.pyqtSignal(str)
+        
 class Main_Window():
     def __init__(self, window):
         super().__init__()
@@ -19,20 +44,28 @@ class Main_Window():
         self.grid_layout = QtWidgets.QGridLayout(self.centralwidget)
         
         #General font 
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        title_font = QtGui.QFont()
-        title_font.setFamily("Yu Gothic UI Light")
+        self.font = QtGui.QFont()
+        self.font.setPointSize(10)
+        self.title_font = QtGui.QFont()
+        self.title_font.setFamily("Yu Gothic UI Light")
+        
+        self.emit_ = Signal()
+        self.emit_.signal.connect(self.create_new_list)
+        
+        self.new_list_window = New_Button(icon,self.font)
+        self.new_list_window.save.clicked.connect(self.fetch_new_list_name)
         
         #Menu bar
-        self.menu = Menu(font,window)
+        self.menu = Menu(self.font,window)
         self.menu_bar = self.menu.menu_bar
+        self.menu.add_list_button.clicked.connect(self.new_list)
+        
         self.grid_layout.addWidget(self.menu_bar, 0, 0, 1, 1)
         
         self.MainWindow = QtWidgets.QStackedWidget(self.centralwidget)
         
         #Today's to do list setup
-        self.today = Page(font,title_font)
+        self.today = Page(self.font,self.title_font)
         self.today_list = self.today.page
         self.today_list_title = self.today.list_title
         self.today_list_title.setText("<html><head/><body><p><span style=\"\
@@ -40,7 +73,7 @@ class Main_Window():
         self.MainWindow.addWidget(self.today_list)
         
         #Important items list setup
-        self.important_ = Page(font,title_font)
+        self.important_ = Page(self.font,self.title_font)
         self.important_list = self.important_.page
         self.important_list_title = self.important_.list_title
         self.important_list_title.setText("<html><head/><body><p><span style=\" \
@@ -48,7 +81,7 @@ class Main_Window():
         self.MainWindow.addWidget(self.important_list)
         
         #All planned items list setup
-        self.all = Page(font,title_font)
+        self.all = Page(self.font,self.title_font)
         self.all_list = self.all.page
         self.all_list_title = self.all.list_title
         self.all_list_title.setText("<html><head/><body><p><span style=\"\
@@ -60,7 +93,7 @@ class Main_Window():
         self.grid_layout_2 = QtWidgets.QGridLayout(self.completed)
         
         self.completed_list_title = QtWidgets.QLabel(self.completed)
-        self.completed_list_title.setFont(title_font)
+        self.completed_list_title.setFont(self.title_font)
         self.completed_list_title.setText("<html><head/><body><p><span style=\"\
                     font-size:14pt; font-weight:600;\">Mastered</span></p></body></html>")
         self.grid_layout_2.addWidget(self.completed_list_title, 0, 0, 1, 1)
@@ -89,12 +122,34 @@ class Main_Window():
         self.grid_layout.addWidget(self.MainWindow, 0, 1, 1, 1)
         window.setCentralWidget(self.centralwidget)
         
-        #Set Today list as the first page
         self.MainWindow.setCurrentIndex(0)
         self.menu.today_button.setChecked(True)
         QtCore.QMetaObject.connectSlotsByName(window)
-
-
+        
+    def fetch_new_list_name(self):
+        self.emit_.signal.emit(self.new_list_window.name_box.text())
+        self.new_list_window.window.close()
+        self.new_list_window.name_box.setText("")
+        
+    def create_new_list(self,txt):
+        new_button = QtWidgets.QPushButton(self.menu.menu_bar)
+        new_button.setText(txt)
+        new_button.setFont(self.font)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/Icons/Icons/list.png"))
+        new_button.setIcon(icon)
+        new_button.setCheckable(True)
+        new_button.setAutoExclusive(True)
+        new_button.setFlat(True)
+        self.menu.buttons_list.append(new_button.text())
+        self.menu.vertical_layout.addWidget(new_button)
+         
+    def new_list(self):
+        print(self.menu.buttons_list)
+        self.new_list_window.window.show()
+        
+    # def selected():
+            
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
