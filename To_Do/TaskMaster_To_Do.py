@@ -139,8 +139,12 @@ class Main_Window():
     def add_item(self):
         index = self.MainWindow.currentIndex()
         item = self.lists[index].new_task_edit.text()
-        self.lists[index].task_list.addItem(item)
-        self.lists[2].task_list.addItem(item)
+        if self.lists[index].task_list.findItems(item, QtCore.Qt.MatchExactly):
+            pass
+        else:
+            self.lists[index].task_list.addItem(item)
+            self.lists[2].task_list.addItem(item)
+            
         self.lists[index].new_task_edit.setText("")
     
     def clear_list(self):
@@ -154,8 +158,8 @@ class Main_Window():
         self.task_window = Task_Window(f"Task#{item_no+1}")
         self.task_window.important.clicked.connect(lambda:self.mark_task_as_important(item))
         self.task_window.add_today.clicked.connect(lambda:self.add_to_today(item))
-        self.task_window.cancel.clicked.connect(self.task_window.window.close)
         self.task_window.save.clicked.connect(self.task_window.window.close)
+        self.task_window.cancel.clicked.connect(lambda:self.cancel_task_edit(item_no))
         self.task_window.delete_task.clicked.connect(lambda:self.delete_task(item_no,index))
         self.task_window.window.show()
         
@@ -166,13 +170,24 @@ class Main_Window():
             self.lists[i].task_list.itemClicked.connect(self.open_task_window)
             
     def mark_task_as_important(self,item):
-        self.lists[1].task_list.addItem(item)
+        if self.lists[1].task_list.findItems(item, QtCore.Qt.MatchExactly):
+            pass
+        else:
+            self.lists[1].task_list.addItem(item)
         
     def add_to_today(self,item):
-        self.lists[0].task_list.addItem(item)
+        if self.lists[0].task_list.findItems(item, QtCore.Qt.MatchExactly):
+            pass
+        else:
+            self.lists[0].task_list.addItem(item)
         
     def delete_task(self,item,index):
         self.lists[index].task_list.takeItem(item)
+        self.task_window.window.close()
+        
+    def cancel_task_edit(self,item):
+        self.lists[0].task_list.takeItem(item)
+        self.lists[1].task_list.takeItem(item)
         self.task_window.window.close()
                                        
 if __name__ == "__main__":

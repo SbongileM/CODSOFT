@@ -26,6 +26,8 @@ class Task_Window():
         self.add_today = QtWidgets.QPushButton(self.window)
         self.add_today.setText("Add to Today")
         self.add_today.setFont(font)
+        self.add_today.setCheckable(True)
+        self.add_today.setAutoExclusive(True)
         self.grid_layout.addWidget(self.add_today, 2, 0, 1, 1)
         
         self.save = QtWidgets.QPushButton(self.window)
@@ -37,6 +39,8 @@ class Task_Window():
         self.important = QtWidgets.QPushButton(self.window)
         self.important.setText("Mark as important")
         self.important.setFont(font)
+        self.important.setCheckable(True)
+        self.important.setAutoExclusive(True)
         self.grid_layout.addWidget(self.important, 1, 0, 1, 1)
         
         spacer = QtWidgets.QSpacerItem(176, 71, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
