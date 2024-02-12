@@ -156,6 +156,7 @@ class Main_Window():
         self.task_window.add_today.clicked.connect(lambda:self.add_to_today(item))
         self.task_window.cancel.clicked.connect(self.task_window.window.close)
         self.task_window.save.clicked.connect(self.task_window.window.close)
+        self.task_window.delete_task.clicked.connect(lambda:self.delete_task(item_no,index))
         self.task_window.window.show()
         
     def connect_list_buttons(self):
@@ -169,6 +170,10 @@ class Main_Window():
         
     def add_to_today(self,item):
         self.lists[0].task_list.addItem(item)
+        
+    def delete_task(self,item,index):
+        self.lists[index].task_list.takeItem(item)
+        self.task_window.window.close()
                                        
 if __name__ == "__main__":
     import sys
