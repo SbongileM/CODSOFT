@@ -31,6 +31,7 @@ class Task_Window():
         self.save = QtWidgets.QPushButton(self.window)
         self.save.setText("Save")
         self.save.setFont(font)
+        self.save.setCheckable(True)
         self.grid_layout.addWidget(self.save, 7, 2, 1, 1)
         
         self.important = QtWidgets.QPushButton(self.window)
@@ -46,6 +47,7 @@ class Task_Window():
         self.cancel = QtWidgets.QPushButton(self.window)
         self.cancel.setText("Cancel")
         self.cancel.setFont(font)
+        self.cancel.setCheckable(True)
         self.grid_layout.addWidget(self.cancel, 7, 1, 1, 1)
         
         self.delete_task = QtWidgets.QPushButton(self.window)
