@@ -3,6 +3,7 @@ from List_ui_structure import Page
 from Menu_bar import Menu
 from Task_window import Task_Window
 from New_list import New_Button
+from DatabaseManager import DatabaseManager
 import Assets
 
 #Emits a signal when a new list is created
@@ -22,6 +23,8 @@ class List_Signal(QtWidgets.QListWidget):
 class Main_Window():
     def __init__(self, window):
         super().__init__()
+        #data base
+        self.db_manager = DatabaseManager()
         #Container for all the currently available lists
         self.lists = []
         #window setup
@@ -134,6 +137,7 @@ class Main_Window():
         #Update signals accepted by the selected function
         self.connect_slots()
         self.connect_list_buttons()
+        self.save_buttons_to_database()
               
     """-----------------------Functions that handle list items-------------------------------"""
     #Adds task item in the current list
@@ -158,7 +162,6 @@ class Main_Window():
             pass
         else:
             self.lists[1].task_list.addItem(item)
-        print('Important')
             
     #Add current task to Today list
     def add_to_today(self,item):
@@ -166,7 +169,6 @@ class Main_Window():
             pass
         else:
             self.lists[0].task_list.addItem(item)
-        print('Today')
               
     #Adds current task to completed and removes it from parent list
     def mark_as_completed(self,item,item_no,index):
@@ -175,10 +177,9 @@ class Main_Window():
         self.lists[1].task_list.takeItem(item_no)
         self.lists[2].task_list.takeItem(item_no)
         self.lists[index].task_list.takeItem(item_no)
-        print('Completed')
         
     #Save current task edits
-    def save_task(self,index,item):
+    def save_task(self,index):
         notes = self.task_window.notes_edit.toPlainText()
         print(notes)
         new_name = self.task_window.task_name.toPlainText()
@@ -232,12 +233,25 @@ class Main_Window():
         self.task_window.important.clicked.connect(lambda:self.mark_task_as_important(item))
         self.task_window.add_today.clicked.connect(lambda:self.add_to_today(item))
         self.task_window.completed.clicked.connect(lambda:self.mark_as_completed(item,item_no,index))
-        self.task_window.save.clicked.connect(lambda: self.save_task(index,item))
+        self.task_window.save.clicked.connect(lambda: self.save_task(index))
         self.task_window.cancel.clicked.connect(lambda:self.cancel_task_edit(item,item_no))
         self.task_window.delete_task.clicked.connect(lambda:self.delete_task(item,item_no,index))
         self.task_window.window.show()
-              
-                                   
+               
+    def save_buttons_to_database(self):
+        self.db_manager.cursor.execute('DELETE FROM lists;')
+        pages = []
+        
+        for index in range(len(self.menu.buttons_list)):
+            pages.append(self.menu.buttons_list[index].text())
+            
+        for page_ in pages:
+            self.db_manager.add_list(page_)
+            print(page_)
+            
+    #def fetch_from_database(self):
+        
+                                
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
