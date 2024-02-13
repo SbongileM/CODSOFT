@@ -31,6 +31,7 @@ class Main_Window():
         self.lists = []
         #Container for the new user created lists
         self.new_lists = []
+        self.tasks_notes = dict()
         
         #window setup
         window.setWindowTitle("TaskMaster To-Do")
@@ -75,7 +76,7 @@ class Main_Window():
             self.create_button(item)
             self.create_page(item)
             
-        #Connect all current buttons to the selected function
+        #Connect all current buttons to the selected() function
         self.connect_slots()
         self.connect_list_buttons()
         
@@ -89,10 +90,13 @@ class Main_Window():
     def new_list(self):
         self.new_list_window.window.show()
         
-     #Clears the contents of the current list
+    #Clears the contents of the current list
     def clear_list(self):
         index = self.MainWindow.currentIndex()
-        self.lists[index].task_list.clear()
+        try:
+            self.lists[index].task_list.clear()
+        except IndexError:
+            pass
            
     #Connect all the menu buttons to selected function
     def connect_slots(self):
@@ -102,8 +106,11 @@ class Main_Window():
     #Slot for connecting button clicked signal to display corresponding list
     def selected(self):
         index = self.menu.vertical_layout.indexOf(self.centralwidget.sender())
-        self.menu.buttons_list[index].setChecked(True)
-        self.MainWindow.setCurrentIndex(index)
+        try:
+            self.menu.buttons_list[index].setChecked(True)
+            self.MainWindow.setCurrentIndex(index)
+        except IndexError:
+            pass
         
     #Emits signal containing the name of a new list that has been created
     def fetch_new_list_name(self):
@@ -144,15 +151,15 @@ class Main_Window():
         new_button.setFlat(True)
         self.menu.buttons_list.append(new_button)
         self.menu.vertical_layout.addWidget(new_button)
-        #Update signals accepted by the selected function
-        self.connect_slots()
-        self.connect_list_buttons()
         
     #Creates a new list button and page
     def create_new_list(self,txt):
         self.create_button(txt)
         self.new_lists.append(txt)
         self.create_page(txt)
+        #Update signals accepted by the selected() function
+        self.connect_slots()
+        self.connect_list_buttons()
         #Add to database
         self.save_user_buttons()
               
@@ -169,8 +176,8 @@ class Main_Window():
             pass
         else:
             self.lists[index].task_list.addItem(item)
-            self.lists[2].task_list.addItem(item)
-            
+            if index != 2:
+                self.lists[2].task_list.addItem(item)    
         self.lists[index].new_task_edit.setText("")
     
     #Add current task to Important list
@@ -187,7 +194,7 @@ class Main_Window():
         else:
             self.lists[0].task_list.addItem(item)
               
-    #Adds current task to completed and removes it from parent list
+    #Adds current task to completed and removes it from all other lists
     def mark_as_completed(self,item,item_no,index):
         self.lists[3].task_list.addItem(item)
         self.lists[0].task_list.takeItem(item_no)
@@ -196,12 +203,17 @@ class Main_Window():
         self.lists[index].task_list.takeItem(item_no)
         
     #Save current task edits
-    def save_task(self,index):
-        notes = self.task_window.notes_edit.toPlainText()
-        print(notes)
-        new_name = self.task_window.task_name.toPlainText()
-        self.lists[index].task_list.currentItem().setText(new_name)
-        self.task_window.window.close()
+    def save_task(self,index,item_no):
+        try:
+            notes = self.task_window.notes_edit.toPlainText()
+            new_name = self.task_window.task_name.toPlainText()
+            self.lists[index].task_list.currentItem().setText(new_name)
+            self.tasks_notes[(index,item_no)] = notes
+            print(self.tasks_notes)
+        except:
+            self.task_window.window.close()
+        else:
+            self.task_window.window.close() 
         
     #Delete current task    
     def delete_task(self,item,item_no,index):
@@ -209,6 +221,12 @@ class Main_Window():
                                                  QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
         
         if confirm == QtWidgets.QMessageBox.Yes:
+            self.lists[index].task_list.takeItem(item_no)
+            try:
+                del(self.tasks_notes[(index,item_no)])
+            except:
+                pass
+                
             if self.lists[0].task_list.findItems(item, QtCore.Qt.MatchExactly):
                 self.lists[0].task_list.takeItem(item_no)
                 
@@ -216,7 +234,6 @@ class Main_Window():
                 self.lists[1].task_list.takeItem(item_no)
                 
             if self.lists[2].task_list.findItems(item, QtCore.Qt.MatchExactly):
-                self.lists[index].task_list.takeItem(item_no)
                 self.lists[2].task_list.takeItem(item_no)
             
             if self.lists[3].task_list.findItems(item, QtCore.Qt.MatchExactly):
@@ -250,7 +267,7 @@ class Main_Window():
         self.task_window.important.clicked.connect(lambda:self.mark_task_as_important(item))
         self.task_window.add_today.clicked.connect(lambda:self.add_to_today(item))
         self.task_window.completed.clicked.connect(lambda:self.mark_as_completed(item,item_no,index))
-        self.task_window.save.clicked.connect(lambda: self.save_task(index))
+        self.task_window.save.clicked.connect(lambda: self.save_task(index,item_no))
         self.task_window.cancel.clicked.connect(lambda:self.cancel_task_edit(item,item_no))
         self.task_window.delete_task.clicked.connect(lambda:self.delete_task(item,item_no,index))
         self.task_window.window.show()
@@ -269,7 +286,19 @@ class Main_Window():
         
         for button in buttons:
             self.new_lists.append(str(button[1]))
+     
+    # def save_user_lists_items(self):
+    #     self.user_lists_manager.cursor.execute('DELETE FROM tasks;')
+        
+    #     for index in range(len(self.lists)):
+    #         items = []
             
+    #         for id in range((self.lists[index].task_list).count()):
+    #             items.append((self.lists[index].task_list).item(id))
+                
+    #         for item in items:
+    #             self.user_lists_manager.add_task(index,item.text(),)
+              
                                 
 if __name__ == "__main__":
     import sys
