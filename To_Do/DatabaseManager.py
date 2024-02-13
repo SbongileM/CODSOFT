@@ -1,8 +1,8 @@
 import sqlite3
 
 class DatabaseManager:
-    def __init__(self):
-        self.conn = sqlite3.connect('To_Do_list.db')
+    def __init__(self,name):
+        self.conn = sqlite3.connect(f'{name}.db')
         self.cursor = self.conn.cursor()
         self.create_tables()
 

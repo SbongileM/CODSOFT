@@ -23,17 +23,21 @@ class List_Signal(QtWidgets.QListWidget):
 class Main_Window():
     def __init__(self, window):
         super().__init__()
-        #data base
-        self.db_manager = DatabaseManager()
+        #data base for new lists
+        self.user_lists_manager = DatabaseManager("New_lists")
+        #data base for predefined lists
+        #self.db_manager = DatabaseManager("Predefined_lists")
         #Container for all the currently available lists
         self.lists = []
+        #Container for the new user created lists
+        self.new_lists = []
+        
         #window setup
         window.setWindowTitle("TaskMaster To-Do")
         window.resize(880, 600)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/Icons/Icons/To-do.png"))
         window.setWindowIcon(icon)
-        
         #layout settings
         self.centralwidget = QtWidgets.QWidget(window)
         self.grid_layout = QtWidgets.QGridLayout(self.centralwidget)
@@ -63,6 +67,14 @@ class Main_Window():
         self.grid_layout.addWidget(self.MainWindow, 0, 1, 1, 1)
         window.setCentralWidget(self.centralwidget)
         
+        #Fetch items from databases
+        self.fetch_user_buttons()
+        
+        #Add user buttons to menu bar
+        for item in self.new_lists:
+            self.create_button(item)
+            self.create_page(item)
+            
         #Connect all current buttons to the selected function
         self.connect_slots()
         self.connect_list_buttons()
@@ -120,10 +132,9 @@ class Main_Window():
         self.MainWindow.addWidget(list_.page)
         self.lists.append(list_)
         
-    #Creates a new list button and page
-    def create_new_list(self,txt):
+    def create_button(self,name):
         new_button = QtWidgets.QPushButton(self.menu.menu_bar)
-        new_button.setText(txt)
+        new_button.setText(name)
         new_button.setFont(self.font)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/Icons/Icons/list.png"))
@@ -132,12 +143,18 @@ class Main_Window():
         new_button.setAutoExclusive(True)
         new_button.setFlat(True)
         self.menu.buttons_list.append(new_button)
-        self.create_page(txt)
         self.menu.vertical_layout.addWidget(new_button)
         #Update signals accepted by the selected function
         self.connect_slots()
         self.connect_list_buttons()
-        self.save_buttons_to_database()
+        
+    #Creates a new list button and page
+    def create_new_list(self,txt):
+        self.create_button(txt)
+        self.new_lists.append(txt)
+        self.create_page(txt)
+        #Add to database
+        self.save_user_buttons()
               
     """-----------------------Functions that handle list items-------------------------------"""
     #Adds task item in the current list
@@ -238,19 +255,21 @@ class Main_Window():
         self.task_window.delete_task.clicked.connect(lambda:self.delete_task(item,item_no,index))
         self.task_window.window.show()
                
-    def save_buttons_to_database(self):
-        self.db_manager.cursor.execute('DELETE FROM lists;')
-        pages = []
+    #Saves new user created lists to the database
+    def save_user_buttons(self):
+        self.user_lists_manager.cursor.execute('DELETE FROM lists;')
         
-        for index in range(len(self.menu.buttons_list)):
-            pages.append(self.menu.buttons_list[index].text())
+        for index in range(len(self.new_lists)):
+            self.user_lists_manager.add_list(self.new_lists[index])
             
-        for page_ in pages:
-            self.db_manager.add_list(page_)
-            print(page_)
-            
-    #def fetch_from_database(self):
+    #Copies all user created lists from the database       
+    def fetch_user_buttons(self):
+        self.user_lists_manager.cursor.execute('SELECT * FROM lists;')
+        buttons = self.user_lists_manager.cursor.fetchall()
         
+        for button in buttons:
+            self.new_lists.append(str(button[1]))
+            
                                 
 if __name__ == "__main__":
     import sys
