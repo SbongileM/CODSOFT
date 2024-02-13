@@ -2,7 +2,7 @@ from PyQt5 import QtCore, QtWidgets, QtGui
 import Assets
 
 class Task_Window():
-    def __init__(self,task,font):
+    def __init__(self,font):
         super().__init__()
         #Window setup
         self.window = QtWidgets.QMainWindow()
@@ -21,11 +21,10 @@ class Task_Window():
         self.grid_layout.addItem(spacer1, 4, 0, 1, 1)
 
         #Task name label setup
-        self.task_name = QtWidgets.QTextEdit(self.window)
+        self.task_name = QtWidgets.QPlainTextEdit(self.window)
         self.task_name.setMaximumSize(QtCore.QSize(300,50))
         self.task_name.setStyleSheet("background-color: rgb(240, 240, 240);\n"
                                     "font-size:14pt; font-weight:400;")
-        self.task_name.setText(f"{task}")
         self.task_name.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.grid_layout.addWidget(self.task_name, 0, 0, 1, 3)
         
@@ -78,7 +77,7 @@ class Task_Window():
         self.task_notes.setText("Add notes")
         self.task_notes.setFont(font)
         self.grid_layout.addWidget(self.task_notes, 5, 0, 1, 1)
-        self.notes_edit = QtWidgets.QTextEdit(self.window)
+        self.notes_edit = QtWidgets.QPlainTextEdit(self.window)
         self.notes_edit.setFont(font)
         self.notes_edit.resize(QtCore.QSize(300, 800))
         self.grid_layout.addWidget(self.notes_edit, 6, 0, 1, 3)

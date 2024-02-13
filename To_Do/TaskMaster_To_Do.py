@@ -68,21 +68,17 @@ class Main_Window():
         self.MainWindow.setCurrentIndex(0)
         self.menu.today_button.setChecked(True)
         QtCore.QMetaObject.connectSlotsByName(window)
-        
+      
+    """---------------------------Functions that handle lists-------------------------------"""  
     #Shows the new list name edit window when new_list button is selected
     def new_list(self):
         self.new_list_window.window.show()
         
-    #Creates all pages currently saved into the data base
-    def create_pages(self):
-        for button in self.menu.buttons_list:
-            self.create_page(button.text())
-            
-    #Clears the contents of the current list
+     #Clears the contents of the current list
     def clear_list(self):
         index = self.MainWindow.currentIndex()
         self.lists[index].task_list.clear()
-        
+           
     #Connect all the menu buttons to selected function
     def connect_slots(self):
         for i in range(len(self.menu.buttons_list)):
@@ -106,20 +102,11 @@ class Main_Window():
             self.lists[i].add_task_button.clicked.connect(lambda:self.add_item())
             self.lists[i].clear_list_button.clicked.connect(lambda:self.clear_list())
             self.lists[i].task_list.itemClicked.connect(self.open_task_window)
-        
-    #Add current task to Important list
-    def mark_task_as_important(self,item):
-        if self.lists[1].task_list.findItems(item, QtCore.Qt.MatchExactly):
-            pass
-        else:
-            self.lists[1].task_list.addItem(item)
             
-    #Add current task to Today list
-    def add_to_today(self,item):
-        if self.lists[0].task_list.findItems(item, QtCore.Qt.MatchExactly):
-            pass
-        else:
-            self.lists[0].task_list.addItem(item)
+    #Creates all pages currently saved into the data base
+    def create_pages(self):
+        for button in self.menu.buttons_list:
+            self.create_page(button.text())
             
     #Creates a list page
     def create_page(self,name):
@@ -130,6 +117,57 @@ class Main_Window():
         self.MainWindow.addWidget(list_.page)
         self.lists.append(list_)
         
+    #Creates a new list button and page
+    def create_new_list(self,txt):
+        new_button = QtWidgets.QPushButton(self.menu.menu_bar)
+        new_button.setText(txt)
+        new_button.setFont(self.font)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/Icons/Icons/list.png"))
+        new_button.setIcon(icon)
+        new_button.setCheckable(True)
+        new_button.setAutoExclusive(True)
+        new_button.setFlat(True)
+        self.menu.buttons_list.append(new_button)
+        self.create_page(txt)
+        self.menu.vertical_layout.addWidget(new_button)
+        #Update signals accepted by the selected function
+        self.connect_slots()
+        self.connect_list_buttons()
+              
+    """-----------------------Functions that handle list items-------------------------------"""
+    #Adds task item in the current list
+    def add_item(self):
+        index = self.MainWindow.currentIndex()
+        item = self.lists[index].new_task_edit.text()
+        
+        if item == "":
+            item = "Untitled task"
+            
+        if self.lists[index].task_list.findItems(item, QtCore.Qt.MatchExactly):
+            pass
+        else:
+            self.lists[index].task_list.addItem(item)
+            self.lists[2].task_list.addItem(item)
+            
+        self.lists[index].new_task_edit.setText("")
+    
+    #Add current task to Important list
+    def mark_task_as_important(self,item):
+        if self.lists[1].task_list.findItems(item, QtCore.Qt.MatchExactly):
+            pass
+        else:
+            self.lists[1].task_list.addItem(item)
+        print('Important')
+            
+    #Add current task to Today list
+    def add_to_today(self,item):
+        if self.lists[0].task_list.findItems(item, QtCore.Qt.MatchExactly):
+            pass
+        else:
+            self.lists[0].task_list.addItem(item)
+        print('Today')
+              
     #Adds current task to completed and removes it from parent list
     def mark_as_completed(self,item,item_no,index):
         self.lists[3].task_list.addItem(item)
@@ -137,7 +175,15 @@ class Main_Window():
         self.lists[1].task_list.takeItem(item_no)
         self.lists[2].task_list.takeItem(item_no)
         self.lists[index].task_list.takeItem(item_no)
+        print('Completed')
         
+    #Save current task edits
+    def save_task(self,index,item):
+        notes = self.task_window.notes_edit.toPlainText()
+        print(notes)
+        new_name = self.task_window.task_name.toPlainText()
+        self.lists[index].task_list.currentItem().setText(new_name)
+        self.task_window.window.close()
         
     #Delete current task    
     def delete_task(self,item,item_no,index):
@@ -176,53 +222,19 @@ class Main_Window():
             self.lists[3].task_list.takeItem(item_no)
         self.task_window.window.close()
         
-    
-    #Creates a new list button and page
-    def create_new_list(self,txt):
-        new_button = QtWidgets.QPushButton(self.menu.menu_bar)
-        new_button.setText(txt)
-        new_button.setFont(self.font)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/Icons/Icons/list.png"))
-        new_button.setIcon(icon)
-        new_button.setCheckable(True)
-        new_button.setAutoExclusive(True)
-        new_button.setFlat(True)
-        self.menu.buttons_list.append(new_button)
-        self.create_page(txt)
-        self.menu.vertical_layout.addWidget(new_button)
-        #Update signals accepted by the selected function
-        self.connect_slots()
-        self.connect_list_buttons()
-         
-    #Adds task item in the current list
-    def add_item(self):
-        index = self.MainWindow.currentIndex()
-        item = self.lists[index].new_task_edit.text()
-        
-        if item == "":
-            item = "Untitled task"
-            
-        if self.lists[index].task_list.findItems(item, QtCore.Qt.MatchExactly):
-            pass
-        else:
-            self.lists[index].task_list.addItem(item)
-            self.lists[2].task_list.addItem(item)
-            
-        self.lists[index].new_task_edit.setText("")
-    
     #Opens task editing window
     def open_task_window(self): 
         index = self.MainWindow.currentIndex()
         item = self.lists[index].task_list.currentItem().text()
         item_no = self.lists[index].task_list.currentRow() 
-        self.task_window = Task_Window(item,self.font)
+        self.task_window = Task_Window(self.font)
+        self.task_window.task_name.setPlainText(f"{item}")
         self.task_window.important.clicked.connect(lambda:self.mark_task_as_important(item))
         self.task_window.add_today.clicked.connect(lambda:self.add_to_today(item))
-        self.task_window.save.clicked.connect(self.task_window.window.close)
+        self.task_window.completed.clicked.connect(lambda:self.mark_as_completed(item,item_no,index))
+        self.task_window.save.clicked.connect(lambda: self.save_task(index,item))
         self.task_window.cancel.clicked.connect(lambda:self.cancel_task_edit(item,item_no))
         self.task_window.delete_task.clicked.connect(lambda:self.delete_task(item,item_no,index))
-        self.task_window.completed.clicked.connect(lambda:self.mark_as_completed(item,item_no,index))
         self.task_window.window.show()
               
                                    
