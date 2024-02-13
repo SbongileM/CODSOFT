@@ -115,12 +115,26 @@ class Main_Window():
             if self.lists[2].task_list.findItems(item, QtCore.Qt.MatchExactly):
                 self.lists[index].task_list.takeItem(item_no)
                 self.lists[2].task_list.takeItem(item_no)
+            
+            if self.lists[3].task_list.findItems(item, QtCore.Qt.MatchExactly):
+                self.lists[3].task_list.takeItem(item_no)    
             self.task_window.window.close()
           
     #Cancel any changes made to current task
-    def cancel_task_edit(self,item):
-        self.lists[0].task_list.takeItem(item)
-        self.lists[1].task_list.takeItem(item)
+    def cancel_task_edit(self,item,item_no):
+        if self.lists[0].task_list.findItems(item, QtCore.Qt.MatchExactly):
+            pass
+                
+        elif self.lists[1].task_list.findItems(item, QtCore.Qt.MatchExactly):
+             pass 
+         
+        elif self.lists[3].task_list.findItems(item, QtCore.Qt.MatchExactly):
+             pass  
+                
+        else:
+            self.lists[0].task_list.takeItem(item_no)
+            self.lists[1].task_list.takeItem(item_no)
+            self.lists[3].task_list.takeItem(item_no)
         self.task_window.window.close()
         
     #Connect current list buttons to their corresponding signal slots
@@ -136,6 +150,14 @@ class Main_Window():
             pass
         else:
             self.lists[1].task_list.addItem(item)
+            
+    #Adds current task to completed and removes it from parent list
+    def mark_as_completed(self,item,item_no,index):
+        self.lists[3].task_list.addItem(item)
+        self.lists[0].task_list.takeItem(item_no)
+        self.lists[1].task_list.takeItem(item_no)
+        self.lists[2].task_list.takeItem(item_no)
+        self.lists[index].task_list.takeItem(item_no)
         
     #Add current task to Today list
     def add_to_today(self,item):
@@ -143,6 +165,7 @@ class Main_Window():
             pass
         else:
             self.lists[0].task_list.addItem(item)
+    
         
     #Creates a new list button and page
     def create_new_list(self,txt):
@@ -188,12 +211,13 @@ class Main_Window():
         index = self.MainWindow.currentIndex()
         item = self.lists[index].task_list.currentItem().text()
         item_no = self.lists[index].task_list.currentRow() 
-        self.task_window = Task_Window(f"Task#{item_no+1}",self.font)
+        self.task_window = Task_Window(item,self.font)
         self.task_window.important.clicked.connect(lambda:self.mark_task_as_important(item))
         self.task_window.add_today.clicked.connect(lambda:self.add_to_today(item))
         self.task_window.save.clicked.connect(self.task_window.window.close)
-        self.task_window.cancel.clicked.connect(lambda:self.cancel_task_edit(item_no))
+        self.task_window.cancel.clicked.connect(lambda:self.cancel_task_edit(item,item_no))
         self.task_window.delete_task.clicked.connect(lambda:self.delete_task(item,item_no,index))
+        self.task_window.completed.clicked.connect(lambda:self.mark_as_completed(item,item_no,index))
         self.task_window.window.show()
               
                                    
