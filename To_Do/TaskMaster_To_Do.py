@@ -101,10 +101,22 @@ class Main_Window():
             self.menu.buttons_list[i].clicked.connect(lambda: self.selected())
         
     #Delete current task    
-    def delete_task(self,item,index):
-        self.lists[index].task_list.takeItem(item)
-        self.task_window.window.close()
+    def delete_task(self,item,item_no,index):
+        confirm = QtWidgets.QMessageBox.question(window, 'Delete Task', 'Are you sure you want to delete this task?', 
+                                                 QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
         
+        if confirm == QtWidgets.QMessageBox.Yes:
+            if self.lists[0].task_list.findItems(item, QtCore.Qt.MatchExactly):
+                self.lists[0].task_list.takeItem(item_no)
+                
+            if self.lists[1].task_list.findItems(item, QtCore.Qt.MatchExactly):
+                self.lists[1].task_list.takeItem(item_no)
+                
+            if self.lists[2].task_list.findItems(item, QtCore.Qt.MatchExactly):
+                self.lists[index].task_list.takeItem(item_no)
+                self.lists[2].task_list.takeItem(item_no)
+            self.task_window.window.close()
+          
     #Cancel any changes made to current task
     def cancel_task_edit(self,item):
         self.lists[0].task_list.takeItem(item)
@@ -181,10 +193,10 @@ class Main_Window():
         self.task_window.add_today.clicked.connect(lambda:self.add_to_today(item))
         self.task_window.save.clicked.connect(self.task_window.window.close)
         self.task_window.cancel.clicked.connect(lambda:self.cancel_task_edit(item_no))
-        self.task_window.delete_task.clicked.connect(lambda:self.delete_task(item_no,index))
+        self.task_window.delete_task.clicked.connect(lambda:self.delete_task(item,item_no,index))
         self.task_window.window.show()
-        
-                             
+              
+                                   
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
