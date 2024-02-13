@@ -34,7 +34,7 @@ class Task_Window():
         self.add_today.setText("Add to Today")
         self.add_today.setFont(font)
         self.add_today.setCheckable(True)
-        self.add_today.setAutoExclusive(True)
+        self.add_today.setAutoExclusive(False)
         self.grid_layout.addWidget(self.add_today, 1, 0, 1, 3)
         
         #Save task edit changes
@@ -49,7 +49,7 @@ class Task_Window():
         self.important.setText("Mark as Important")
         self.important.setFont(font)
         self.important.setCheckable(True)
-        self.important.setAutoExclusive(True)
+        self.important.setAutoExclusive(False)
         self.grid_layout.addWidget(self.important, 2, 0, 1, 3)
         
         #Button adds current item to the list of important items
@@ -57,7 +57,7 @@ class Task_Window():
         self.completed.setText("Mark as Mastered")
         self.completed.setFont(font)
         self.completed.setCheckable(True)
-        self.completed.setAutoExclusive(True)
+        self.completed.setAutoExclusive(False)
         self.grid_layout.addWidget(self.completed, 3, 0, 1, 3)
         
         #Cancel any changes made on the task edit window

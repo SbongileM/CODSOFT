@@ -17,6 +17,7 @@ class Page():
         #Add new task edit box
         self.new_task_edit = QtWidgets.QLineEdit(self.page)
         self.new_task_edit.setPlaceholderText("New task")
+        self.new_task_edit.setText("")
         self.new_task_edit.setFont(font)
         self.grid_layout.addWidget(self.new_task_edit, 3, 0, 1, 2)
         
@@ -31,8 +32,6 @@ class Page():
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/Icons/Icons/bin.png"))
         self.clear_list_button.setIcon(icon)
-        self.clear_list_button.setCheckable(True)
-        self.clear_list_button.setAutoExclusive(True)
         self.clear_list_button.setFlat(True)
         self.grid_layout.addWidget(self.clear_list_button, 0, 2, 1, 1)
         
@@ -41,7 +40,6 @@ class Page():
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/Icons/Icons/add.png"))
         self.add_task_button.setIcon(icon)
-        self.add_task_button.setCheckable(True)
         self.add_task_button.setFlat(True)
         self.grid_layout.addWidget(self.add_task_button, 3, 2, 1, 1)
         
