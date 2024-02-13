@@ -24,14 +24,7 @@ class Main_Window():
     def __init__(self, window):
         super().__init__()
         #data base for new lists
-        self.user_lists_manager = DatabaseManager("New_lists")
-        #data base for predefined lists
-        #self.db_manager = DatabaseManager("Predefined_lists")
-        #Container for all the currently available lists
-        self.lists = []
-        #Container for the new user created lists
-        self.new_lists = []
-        self.tasks_notes = dict()
+        self.lists_manager = DatabaseManager()
         
         #window setup
         window.setWindowTitle("TaskMaster To-Do")
@@ -42,14 +35,13 @@ class Main_Window():
         #layout settings
         self.centralwidget = QtWidgets.QWidget(window)
         self.grid_layout = QtWidgets.QGridLayout(self.centralwidget)
-        
         #General font settings
         self.font = QtGui.QFont()
         self.font.setPointSize(10)
         self.title_font = QtGui.QFont()
         self.title_font.setFamily("Yu Gothic UI Light")
         
-        #Signal for creation of a new list
+        #Signal for the creation of a new list
         self.emit_ = NewListSignal()
         self.emit_.signal.connect(self.create_new_list)
         self.new_list_window = New_Button(icon,self.font)
@@ -61,20 +53,25 @@ class Main_Window():
         self.menu.add_list_button.clicked.connect(self.new_list)
         self.grid_layout.addWidget(self.menu_bar, 0, 0, 1, 1)
         
+        #Container for the created lists
+        self.new_lists = [button.text() for button in self.menu.buttons_list]
+        self.tasks_notes = dict()
+        self.lists = []
+        
         #Stacked widget for list pages
         self.MainWindow = QtWidgets.QStackedWidget(self.centralwidget)
         #Create list pages
         self.create_pages()
         self.grid_layout.addWidget(self.MainWindow, 0, 1, 1, 1)
         window.setCentralWidget(self.centralwidget)
-        
         #Fetch items from databases
         self.fetch_user_buttons()
-        
+
         #Add user buttons to menu bar
-        for item in self.new_lists:
-            self.create_button(item)
-            self.create_page(item)
+        if len(self.new_lists) > 7:
+            for item in self.new_lists[7:]:
+                self.create_button(item)
+                self.create_page(item)
             
         #Connect all current buttons to the selected() function
         self.connect_slots()
@@ -93,11 +90,18 @@ class Main_Window():
     #Clears the contents of the current list
     def clear_list(self):
         index = self.MainWindow.currentIndex()
-        try:
-            self.lists[index].task_list.clear()
-        except IndexError:
-            pass
-           
+        self.lists[index].task_list.clear()
+
+    #Deletes the current list
+    def delete_list(self):
+        index = self.MainWindow.currentIndex()
+        self.menu.buttons_list[index].deleteLater()
+        self.MainWindow.removeWidget(self.lists[index].page)
+        del(self.lists[index])
+        del(self.new_lists[index])
+        #Update database
+        self.save_user_buttons()
+               
     #Connect all the menu buttons to selected function
     def connect_slots(self):
         for i in range(len(self.menu.buttons_list)):
@@ -123,6 +127,7 @@ class Main_Window():
         for i in range(len(self.lists)):
             self.lists[i].add_task_button.clicked.connect(lambda:self.add_item())
             self.lists[i].clear_list_button.clicked.connect(lambda:self.clear_list())
+            self.lists[i].delete_list_button.clicked.connect(lambda:self.delete_list())
             self.lists[i].task_list.itemClicked.connect(self.open_task_window)
             
     #Creates all pages currently saved into the data base
@@ -209,7 +214,6 @@ class Main_Window():
             new_name = self.task_window.task_name.toPlainText()
             self.lists[index].task_list.currentItem().setText(new_name)
             self.tasks_notes[(index,item_no)] = notes
-            print(self.tasks_notes)
         except:
             self.task_window.window.close()
         else:
@@ -274,31 +278,20 @@ class Main_Window():
                
     #Saves new user created lists to the database
     def save_user_buttons(self):
-        self.user_lists_manager.cursor.execute('DELETE FROM lists;')
+        self.lists_manager.cursor.execute('DELETE FROM lists;')
         
         for index in range(len(self.new_lists)):
-            self.user_lists_manager.add_list(self.new_lists[index])
+            self.lists_manager.add_list(self.new_lists[index])
             
     #Copies all user created lists from the database       
     def fetch_user_buttons(self):
-        self.user_lists_manager.cursor.execute('SELECT * FROM lists;')
-        buttons = self.user_lists_manager.cursor.fetchall()
+        self.lists_manager.cursor.execute('SELECT * FROM lists;')
+        buttons = self.lists_manager.get_lists()
         
-        for button in buttons:
-            self.new_lists.append(str(button[1]))
+        if len(buttons) > 7:
+            for button in buttons[7:]:
+                self.new_lists.append(str(button[1]))
      
-    # def save_user_lists_items(self):
-    #     self.user_lists_manager.cursor.execute('DELETE FROM tasks;')
-        
-    #     for index in range(len(self.lists)):
-    #         items = []
-            
-    #         for id in range((self.lists[index].task_list).count()):
-    #             items.append((self.lists[index].task_list).item(id))
-                
-    #         for item in items:
-    #             self.user_lists_manager.add_task(index,item.text(),)
-              
                                 
 if __name__ == "__main__":
     import sys
