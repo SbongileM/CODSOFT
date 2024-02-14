@@ -318,10 +318,4 @@ class Main_Window():
                 for item in items:
                     self.lists[index].task_list.addItem(str(item[1]))
           
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    window = QtWidgets.QMainWindow()
-    ui = Main_Window(window)
-    window.show()
-    sys.exit(app.exec_())
+
