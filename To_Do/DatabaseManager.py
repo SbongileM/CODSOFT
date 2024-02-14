@@ -10,7 +10,7 @@ class DatabaseManager:
         self.cursor.execute('''
             CREATE TABLE IF NOT EXISTS lists (
                 id INTEGER PRIMARY KEY,
-                name BLOB
+                name TEXT
             )
         ''')
         self.cursor.execute('''
@@ -18,7 +18,6 @@ class DatabaseManager:
                 id INTEGER PRIMARY KEY,
                 list_id INTEGER,
                 name TEXT,
-                notes TEXT,
                 FOREIGN KEY(list_id) REFERENCES lists(id)
             )
         ''')
@@ -30,10 +29,10 @@ class DatabaseManager:
         ''', (name,))
         self.conn.commit()
 
-    def add_task(self, list_id, name,notes):
+    def add_task(self, list_id, name):
         self.cursor.execute('''
-            INSERT INTO tasks (list_id, name, notes) VALUES (?, ?, ?)
-        ''', (list_id, name, notes))
+            INSERT INTO tasks (list_id, name) VALUES (?, ?)
+        ''', (list_id, name))
         self.conn.commit()
 
     def get_lists(self):
@@ -46,4 +45,5 @@ class DatabaseManager:
         self.cursor.execute('''
             SELECT id, name FROM tasks WHERE list_id = ?
         ''', (list_id,))
-        self.cursor.fetchall()
+        return self.cursor.fetchall()
+        
