@@ -53,7 +53,7 @@ class Main_Window():
         self.menu.add_list_button.clicked.connect(self.new_list)
         self.grid_layout.addWidget(self.menu_bar, 0, 0, 1, 1)
         
-        #Container for the created lists
+        #Containers for the created lists
         self.new_lists = [button.text() for button in self.menu.buttons_list]
         self.lists = []
 
@@ -63,10 +63,11 @@ class Main_Window():
         self.create_pages()
         self.grid_layout.addWidget(self.MainWindow, 0, 1, 1, 1)
         window.setCentralWidget(self.centralwidget)
-        #Fetch lists from databases
+        
+        #Fetch lists from database
         self.fetch_user_buttons()
         
-        #Add user buttons to menu bar
+        #Add user list buttons to menu bar
         if len(self.new_lists) > 7:
             for item in self.new_lists[7:]:
                 self.create_button(item)
@@ -92,14 +93,15 @@ class Main_Window():
     def clear_list(self):
         index = self.MainWindow.currentIndex()
         self.lists[index].task_list.clear()
+        self.save_user_lists_items()
 
     #Deletes the current list
     def delete_list(self):
         index = self.MainWindow.currentIndex()
         self.menu.buttons_list[index].deleteLater()
         self.MainWindow.removeWidget(self.lists[index].page)
-        del(self.lists[index])
-        del(self.new_lists[index])
+        del self.lists[index]
+        del self.new_lists[index]
         #Update database
         self.save_user_buttons()
                
@@ -169,7 +171,7 @@ class Main_Window():
         #Add to database
         self.save_user_buttons()
               
-    """-----------------------Functions that handle list items-------------------------------"""
+    """-----------------------Functions to handle list items-------------------------------"""
     #Adds task item in the current list
     def add_item(self):
         index = self.MainWindow.currentIndex()
@@ -210,9 +212,10 @@ class Main_Window():
     #Save current task edits
     def save_task(self,index):
         try:
-            notes = self.task_window.notes_edit.toPlainText()
+            #notes = self.task_window.notes_edit.toPlainText()
             new_name = self.task_window.task_name.toPlainText()
             self.lists[index].task_list.currentItem().setText(new_name)
+            # self.lists_manager.update_task(item_no,new_name,str(notes))
             self.save_user_lists_items()
         except:
             self.task_window.window.close()
@@ -221,8 +224,10 @@ class Main_Window():
         
     #Delete current task    
     def delete_task(self,item,item_no,index):
-        confirm = QtWidgets.QMessageBox.question(window, 'Delete Task', 'Are you sure you want to delete this task?', 
-                                                 QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
+        confirm = QtWidgets.QMessageBox.question(window, 'Delete Task', 
+                                                 'Are you sure you want to delete this task?', 
+                                                 QtWidgets.QMessageBox.Yes|
+                                                 QtWidgets.QMessageBox.No)
         
         if confirm == QtWidgets.QMessageBox.Yes:
             #remove item from current list
@@ -231,13 +236,13 @@ class Main_Window():
             if self.lists[0].task_list.findItems(item, QtCore.Qt.MatchExactly):
                 self.lists[0].task_list.takeItem(item_no)
                 
-            if self.lists[1].task_list.findItems(item, QtCore.Qt.MatchExactly):
+            elif self.lists[1].task_list.findItems(item, QtCore.Qt.MatchExactly):
                 self.lists[1].task_list.takeItem(item_no)
                 
-            if self.lists[2].task_list.findItems(item, QtCore.Qt.MatchExactly):
+            elif self.lists[2].task_list.findItems(item, QtCore.Qt.MatchExactly):
                 self.lists[2].task_list.takeItem(item_no)
             
-            if self.lists[3].task_list.findItems(item, QtCore.Qt.MatchExactly):
+            elif self.lists[3].task_list.findItems(item, QtCore.Qt.MatchExactly):
                 self.lists[3].task_list.takeItem(item_no)    
             self.save_user_lists_items()
             self.task_window.window.close()
@@ -247,10 +252,10 @@ class Main_Window():
         if self.lists[0].task_list.findItems(item, QtCore.Qt.MatchExactly):
             self.lists[0].task_list.takeItem(item_no)
                 
-        if self.lists[1].task_list.findItems(item, QtCore.Qt.MatchExactly):
+        elif self.lists[1].task_list.findItems(item, QtCore.Qt.MatchExactly):
             self.lists[1].task_list.takeItem(item_no)
          
-        if self.lists[3].task_list.findItems(item, QtCore.Qt.MatchExactly):
+        elif self.lists[3].task_list.findItems(item, QtCore.Qt.MatchExactly):
             self.lists[3].task_list.takeItem(item_no)
             
         self.save_user_lists_items()
@@ -265,10 +270,12 @@ class Main_Window():
         self.task_window.task_name.setPlainText(f"{item}")
         self.task_window.important.clicked.connect(lambda:self.mark_task_as_important(item))
         self.task_window.add_today.clicked.connect(lambda:self.add_to_today(item))
-        self.task_window.completed.clicked.connect(lambda:self.mark_as_completed(item,item_no,index))
+        self.task_window.completed.clicked.connect(lambda:self.mark_as_completed(item,item_no,
+                                                                                 index))
         self.task_window.save.clicked.connect(lambda: self.save_task(index))
         self.task_window.cancel.clicked.connect(lambda:self.cancel_task_edit(item,item_no))
-        self.task_window.delete_task.clicked.connect(lambda:self.delete_task(item,item_no,index))
+        self.task_window.delete_task.clicked.connect(lambda:self.delete_task(item,item_no,
+                                                                             index))
         self.task_window.window.show()
                
     #Saves all lists to the database
@@ -298,7 +305,7 @@ class Main_Window():
                 items.append((self.lists[index].task_list).item(id))
                 
             for item in items:
-                self.lists_manager.add_task(index+1,str(item.text()))
+                self.lists_manager.add_task(index+1,str(item.text()),"")
                 
     #Copies all lists contents from the data_base
     def fetch_lists_items(self):

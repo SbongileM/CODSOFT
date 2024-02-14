@@ -18,6 +18,7 @@ class DatabaseManager:
                 id INTEGER PRIMARY KEY,
                 list_id INTEGER,
                 name TEXT,
+                note TEXT,
                 FOREIGN KEY(list_id) REFERENCES lists(id)
             )
         ''')
@@ -29,11 +30,17 @@ class DatabaseManager:
         ''', (name,))
         self.conn.commit()
 
-    def add_task(self, list_id, name):
+    def add_task(self, list_id, name,note):
         self.cursor.execute('''
-            INSERT INTO tasks (list_id, name) VALUES (?, ?)
-        ''', (list_id, name))
+            INSERT INTO tasks (list_id, name,note) VALUES (?, ?,?)
+        ''', (list_id, name,note))
         self.conn.commit()
+        
+    def update_task(self, item_id, new_name, note):
+        self.cursor.execute('''
+            UPDATE tasks SET (name,note) VALUES (?, ?) WHERE id = ?
+        ''', (new_name, item_id,note))
+        self.connection.commit()
 
     def get_lists(self):
         self.cursor.execute('''
@@ -43,7 +50,7 @@ class DatabaseManager:
 
     def get_tasks(self, list_id):
         self.cursor.execute('''
-            SELECT id, name FROM tasks WHERE list_id = ?
+            SELECT id, name,note FROM tasks WHERE list_id = ?
         ''', (list_id,))
         return self.cursor.fetchall()
         
