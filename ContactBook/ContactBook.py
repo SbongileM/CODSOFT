@@ -1,9 +1,14 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from DatabaseManager import DatabaseManager
 import Assets
 
 class mainWindow():
     def __init__(self):
         super().__init__()
+        #Private containers that manage app data
+        self._contact_manager = DatabaseManager()
+        self._contacts = []
+        
         #Window setup
         self.window = QtWidgets.QMainWindow()
         self.window.setWindowTitle("ContactBook")
@@ -37,7 +42,6 @@ class mainWindow():
         self.add_contact = QtWidgets.QPushButton(self.centralwidget)
         self.add_contact.setFont(font)
         self.add_contact.setStyleSheet("image: url(:/Icons/Assets/add-contact.png);")
-        self.add_contact.setCheckable(True)
         self.add_contact.setAutoExclusive(True)
         self.add_contact.setFlat(True)
         self.add_contact.clicked.connect(self.new_contact)
@@ -293,8 +297,11 @@ class mainWindow():
     def new_contact(self):
         self.app_pages.setCurrentIndex(3)
       
+    #Ignores and edits made and close the contact edit page
     def cancel_edits(self):
         self.app_pages.setCurrentIndex(0)  
+        
+    
               
 if __name__ == "__main__":
     import sys
