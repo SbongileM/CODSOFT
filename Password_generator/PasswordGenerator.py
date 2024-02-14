@@ -1,6 +1,6 @@
 '''
 Author: Sbongile Mdaki
-Date:  22 January 2023
+Date:  22 January 2024
 Project: GUI desktop password generator application for CodSoft internship
 
 This project aims to create a password generator application using Python.It prompts the user 

@@ -1,6 +1,6 @@
 '''
 Author: Sbongile Mdaki
-Date:  28 January 2023
+Date:  28 January 2024
 Project: GUI desktop Rock-Paper-Scissors application for CodSoft internship
 
 This project aims to create a user-friendly interface with clear instructions and
