@@ -301,6 +301,19 @@ class mainWindow():
     def cancel_edits(self):
         self.app_pages.setCurrentIndex(0)  
         
+    #Copies what is currently saved to the database
+    def save_contacts(self):
+        self.contact_manager.cursor.execute('DELETE FROM contacts;')
+        
+        for index in range(len(self.contacts)):
+            name = (self.contacts[index])[0]
+            number = (self.contacts[index])[1]
+            email = (self.contacts[index])[2]
+            store_name = (self.contacts[index])[3]
+            address = (self.contacts[index])[4]
+            
+            self.contact_manager.add_contact(name,number,email,store_name,address)
+            
     
               
 if __name__ == "__main__":
