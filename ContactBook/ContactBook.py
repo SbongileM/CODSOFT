@@ -289,7 +289,9 @@ class mainWindow():
         self.app_pages.addWidget(self.New_contact)
         self.grid_layout.addWidget(self.app_pages, 2, 0, 1, 3)
         self.window.setCentralWidget(self.centralwidget)
-
+        #Fetch contacts saved in memory
+        self.fetch_contacts()
+        #Set current page to contact list
         self.app_pages.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(self.window)
         
@@ -303,18 +305,28 @@ class mainWindow():
         
     #Copies what is currently saved to the database
     def save_contacts(self):
-        self.contact_manager.cursor.execute('DELETE FROM contacts;')
+        self._contact_manager.cursor.execute('DELETE FROM contacts;')
         
         for index in range(len(self.contacts)):
-            name = (self.contacts[index])[0]
-            number = (self.contacts[index])[1]
-            email = (self.contacts[index])[2]
-            store_name = (self.contacts[index])[3]
-            address = (self.contacts[index])[4]
+            name = (self._contacts[index])[0]
+            number = (self._contacts[index])[1]
+            email = (self._contacts[index])[2]
+            store_name = (self._contacts[index])[3]
+            address = (self._contacts[index])[4]
             
-            self.contact_manager.add_contact(name,number,email,store_name,address)
+            self._contact_manager.add_contact(name,number,email,store_name,address)
             
-    
+    #Copies the contents of the database into the contacts list
+    def fetch_contacts(self):
+        self._contact_manager.cursor.execute('SELECT * FROM contacts;')
+        contacts = self._contact_manager.get_contacts()
+        
+        for contact in contacts:
+            if contact:
+                details = f"Name: {contact[0]}\nNumber: {contact[1]}\nEmail Address: {contact[2]}\nStore: {contact[3]}\nPhysical Address: {contact[4]}"
+                                
+            self.contact_list.addItem(str(details))
+            self._contacts.append(contact)
               
 if __name__ == "__main__":
     import sys
