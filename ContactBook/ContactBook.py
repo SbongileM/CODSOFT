@@ -286,6 +286,7 @@ class mainWindow():
         self.save.setFont(font)
         self.save.setCheckable(True)
         self.save.setAutoExclusive(True)
+        self.save.clicked.connect(self.save_contact)
         self.grid_layout_5.addWidget(self.save, 5, 1, 1, 1)
         self.app_pages.addWidget(self.New_contact)
         self.grid_layout.addWidget(self.app_pages, 2, 0, 1, 3)
@@ -308,7 +309,7 @@ class mainWindow():
     def save_contacts(self):
         self._contact_manager.cursor.execute('DELETE FROM contacts;')
         
-        for index in range(len(self.contacts)):
+        for index in range(len(self._contacts)):
             name = (self._contacts[index])[0]
             number = (self._contacts[index])[1]
             email = (self._contacts[index])[2]
@@ -343,6 +344,21 @@ class mainWindow():
                 output_txt = f"Name: {item[1]}\nNumber: {item[2]}\nEmail: {item[3]}\nStore: {item[4]}\nPhysical Address: {item[5]}"
                                 
                 self.search_list.addItem(output_txt)
+        
+    #Save contact function for the new contact view save button        
+    def save_contact(self):
+        name = self.name_.text()
+        number = self.phone_.text()
+        email = self.email_.text()
+        store_name = self.store_name_.text()
+        address = self.address_.text()
+        
+        self._contacts.append((name,number,email,store_name,address))
+        self.contact_list.addItem(f"Name: {name}\nNumber: {number}\nEmail: {email}\nStore: {store_name}\nPhysical Address: {address}")
+        self.save_contacts()
+        self.name_.clear(),self.phone_.clear(),self.email_.clear(),self.store_name_.clear()
+        self.address_.clear()
+        self.app_pages.setCurrentIndex(0)
               
 if __name__ == "__main__":
     import sys
