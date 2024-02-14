@@ -55,9 +55,8 @@ class Main_Window():
         
         #Container for the created lists
         self.new_lists = [button.text() for button in self.menu.buttons_list]
-        self.tasks_notes = dict()
         self.lists = []
-        
+
         #Stacked widget for list pages
         self.MainWindow = QtWidgets.QStackedWidget(self.centralwidget)
         #Create list pages
@@ -176,44 +175,40 @@ class Main_Window():
         
         if item == "":
             item = "Untitled task"
-            
-        if self.lists[index].task_list.findItems(item, QtCore.Qt.MatchExactly):
-            pass
-        else:
+             
+        if not self.lists[index].task_list.findItems(item, QtCore.Qt.MatchExactly):
             self.lists[index].task_list.addItem(item)
             if index != 2:
-                self.lists[2].task_list.addItem(item)    
+                self.lists[2].task_list.addItem(item) 
+                   
         self.lists[index].new_task_edit.setText("")
     
     #Add current task to Important list
     def mark_task_as_important(self,item):
-        if self.lists[1].task_list.findItems(item, QtCore.Qt.MatchExactly):
-            pass
-        else:
+        if not self.lists[1].task_list.findItems(item, QtCore.Qt.MatchExactly):
             self.lists[1].task_list.addItem(item)
             
     #Add current task to Today list
     def add_to_today(self,item):
-        if self.lists[0].task_list.findItems(item, QtCore.Qt.MatchExactly):
-            pass
-        else:
+        if not self.lists[0].task_list.findItems(item, QtCore.Qt.MatchExactly):
             self.lists[0].task_list.addItem(item)
               
     #Adds current task to completed and removes it from all other lists
     def mark_as_completed(self,item,item_no,index):
         self.lists[3].task_list.addItem(item)
+        #Remove from all other primary lists
         self.lists[0].task_list.takeItem(item_no)
         self.lists[1].task_list.takeItem(item_no)
         self.lists[2].task_list.takeItem(item_no)
         self.lists[index].task_list.takeItem(item_no)
         
     #Save current task edits
-    def save_task(self,index,item_no):
+    def save_task(self,index):
         try:
             notes = self.task_window.notes_edit.toPlainText()
             new_name = self.task_window.task_name.toPlainText()
             self.lists[index].task_list.currentItem().setText(new_name)
-            self.tasks_notes[(index,item_no)] = notes
+            self.save_user_lists_items(notes)
         except:
             self.task_window.window.close()
         else:
@@ -225,12 +220,9 @@ class Main_Window():
                                                  QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
         
         if confirm == QtWidgets.QMessageBox.Yes:
+            #remove item from current list
             self.lists[index].task_list.takeItem(item_no)
-            try:
-                del(self.tasks_notes[(index,item_no)])
-            except:
-                pass
-                
+            #remove item from other lists it was copied into  
             if self.lists[0].task_list.findItems(item, QtCore.Qt.MatchExactly):
                 self.lists[0].task_list.takeItem(item_no)
                 
@@ -247,18 +239,14 @@ class Main_Window():
     #Cancel any changes made to current task
     def cancel_task_edit(self,item,item_no):
         if self.lists[0].task_list.findItems(item, QtCore.Qt.MatchExactly):
-            pass
-                
-        elif self.lists[1].task_list.findItems(item, QtCore.Qt.MatchExactly):
-             pass 
-         
-        elif self.lists[3].task_list.findItems(item, QtCore.Qt.MatchExactly):
-             pass  
-                
-        else:
             self.lists[0].task_list.takeItem(item_no)
+                
+        if self.lists[1].task_list.findItems(item, QtCore.Qt.MatchExactly):
             self.lists[1].task_list.takeItem(item_no)
+         
+        if self.lists[3].task_list.findItems(item, QtCore.Qt.MatchExactly):
             self.lists[3].task_list.takeItem(item_no)
+
         self.task_window.window.close()
         
     #Opens task editing window
@@ -271,19 +259,19 @@ class Main_Window():
         self.task_window.important.clicked.connect(lambda:self.mark_task_as_important(item))
         self.task_window.add_today.clicked.connect(lambda:self.add_to_today(item))
         self.task_window.completed.clicked.connect(lambda:self.mark_as_completed(item,item_no,index))
-        self.task_window.save.clicked.connect(lambda: self.save_task(index,item_no))
+        self.task_window.save.clicked.connect(lambda: self.save_task(index))
         self.task_window.cancel.clicked.connect(lambda:self.cancel_task_edit(item,item_no))
         self.task_window.delete_task.clicked.connect(lambda:self.delete_task(item,item_no,index))
         self.task_window.window.show()
                
-    #Saves new user created lists to the database
+    #Saves all lists to the database
     def save_user_buttons(self):
         self.lists_manager.cursor.execute('DELETE FROM lists;')
         
         for index in range(len(self.new_lists)):
             self.lists_manager.add_list(self.new_lists[index])
             
-    #Copies all user created lists from the database       
+    #Copies all lists from the database       
     def fetch_user_buttons(self):
         self.lists_manager.cursor.execute('SELECT * FROM lists;')
         buttons = self.lists_manager.get_lists()
@@ -291,8 +279,20 @@ class Main_Window():
         if len(buttons) > 7:
             for button in buttons[7:]:
                 self.new_lists.append(str(button[1]))
-     
-                                
+       
+    #Saves  the contents of all the lists into the database       
+    def save_user_lists_items(self,notes):
+        self.lists_manager.cursor.execute('DELETE FROM tasks;')
+        
+        for index in range(len(self.lists)):
+            items = []
+            
+            for id in range((self.lists[index].task_list).count()):
+                items.append((self.lists[index].task_list).item(id))
+                
+            for item in items:
+                self.lists_manager.add_task(index,str(item.text()),str(notes))
+                                        
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)

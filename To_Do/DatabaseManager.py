@@ -32,7 +32,7 @@ class DatabaseManager:
 
     def add_task(self, list_id, name,notes):
         self.cursor.execute('''
-            INSERT INTO tasks (list_id, name, notes) VALUES (?, ?)
+            INSERT INTO tasks (list_id, name, notes) VALUES (?, ?, ?)
         ''', (list_id, name, notes))
         self.conn.commit()
 
