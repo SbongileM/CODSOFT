@@ -59,6 +59,7 @@ class mainWindow():
         self.search_button.setStyleSheet("image: url(:/Icons/Assets/search.png);")
         self.search_button.setFlat(True)
         self.search_button.setAutoExclusive(True)
+        self.search_button.clicked.connect(self.search_contact)
         self.horizontal_layout.addWidget(self.search_button)
         self.grid_layout.addLayout(self.horizontal_layout, 1, 0, 1, 3)
         
@@ -327,6 +328,21 @@ class mainWindow():
                                 
             self.contact_list.addItem(str(details))
             self._contacts.append(contact)
+            
+    #Search function for the search engine
+    def search_contact(self):
+        searched_item = self.search_box.text()
+        self.app_pages.setCurrentIndex(1)
+        
+        self.search_list.clear()
+        
+        if searched_item:
+            matched_items = self._contact_manager.get_contact(searched_item)
+            
+            for item in matched_items:
+                output_txt = f"Name: {item[1]}\nNumber: {item[2]}\nEmail: {item[3]}\nStore: {item[4]}\nPhysical Address: {item[5]}"
+                                
+                self.search_list.addItem(output_txt)
               
 if __name__ == "__main__":
     import sys
