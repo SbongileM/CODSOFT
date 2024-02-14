@@ -101,7 +101,7 @@ class mainWindow():
         self.name.setFrame(False)
         self.name.setClearButtonEnabled(True)
         self.horizontal_layout_2.addWidget(self.name)
-        self.grid_layout_4.addLayout(self.horizontal_layout_2, 0, 0, 1, 2)
+        self.grid_layout_4.addLayout(self.horizontal_layout_2, 0, 0, 1, 3)
         #Phone widgets setup
         self.horizontal_layout_3 = QtWidgets.QHBoxLayout()
         self.phone_icon = QtWidgets.QPushButton(self.contact_view)
@@ -117,7 +117,7 @@ class mainWindow():
         self.phone.setFrame(False)
         self.phone.setClearButtonEnabled(True)
         self.horizontal_layout_3.addWidget(self.phone)
-        self.grid_layout_4.addLayout(self.horizontal_layout_3, 1, 0, 1, 2)
+        self.grid_layout_4.addLayout(self.horizontal_layout_3, 1, 0, 1, 3)
         #Email widgets setup
         self.horizontal_layout_4 = QtWidgets.QHBoxLayout()
         self.email_icon = QtWidgets.QPushButton(self.contact_view)
@@ -133,7 +133,7 @@ class mainWindow():
         self.email.setFrame(False)
         self.email.setClearButtonEnabled(True)
         self.horizontal_layout_4.addWidget(self.email)
-        self.grid_layout_4.addLayout(self.horizontal_layout_4, 2, 0, 1, 2)
+        self.grid_layout_4.addLayout(self.horizontal_layout_4, 2, 0, 1, 3)
         #Name of the store widgets setup
         self.horizontal_layout_5 = QtWidgets.QHBoxLayout()
         self.store = QtWidgets.QPushButton(self.contact_view)
@@ -149,7 +149,7 @@ class mainWindow():
         self.store_name.setFrame(False)
         self.store_name.setClearButtonEnabled(True)
         self.horizontal_layout_5.addWidget(self.store_name)
-        self.grid_layout_4.addLayout(self.horizontal_layout_5, 3, 0, 1, 2)
+        self.grid_layout_4.addLayout(self.horizontal_layout_5, 3, 0, 1, 3)
         #Store location widgets setup
         self.horizontal_layout_6 = QtWidgets.QHBoxLayout()
         self.pin = QtWidgets.QPushButton(self.contact_view)
@@ -165,13 +165,20 @@ class mainWindow():
         self.address.setFrame(False)
         self.address.setClearButtonEnabled(True)
         self.horizontal_layout_6.addWidget(self.address)
-        self.grid_layout_4.addLayout(self.horizontal_layout_6, 4, 0, 1, 2)
+        self.grid_layout_4.addLayout(self.horizontal_layout_6, 4, 0, 1, 3)
         #Delete contact button
         self.delete = QtWidgets.QPushButton("Delete",self.contact_view)
         self.delete.setFont(font)
         self.delete.setCheckable(True)
         self.delete.setAutoExclusive(True)
         self.grid_layout_4.addWidget(self.delete, 5, 0, 1, 1)
+        #Cancel updates
+        self.cancel = QtWidgets.QPushButton("Cancel",self.contact_view)
+        self.cancel.setFont(font)
+        self.cancel.setCheckable(True)
+        self.cancel.setAutoExclusive(True)
+        self.cancel.clicked.connect(self.cancel_edits)
+        self.grid_layout_4.addWidget(self.cancel, 5, 1, 1, 1)
         #Update contact details 
         self.update = QtWidgets.QPushButton("Update",self.contact_view)
         self.update.setFont(font)
@@ -274,6 +281,7 @@ class mainWindow():
         self.cancel.setFont(font)
         self.cancel.setCheckable(True)
         self.cancel.setAutoExclusive(True)
+        self.cancel.clicked.connect(self.cancel_edits)
         self.grid_layout_5.addWidget(self.cancel, 5, 0, 1, 1)
         #Add contact button
         self.save = QtWidgets.QPushButton("Save", self.New_contact)
@@ -291,7 +299,9 @@ class mainWindow():
     #Opens the new contact page  
     def new_contact(self):
         self.app_pages.setCurrentIndex(3)
-        
+      
+    def cancel_edits(self):
+        self.app_pages.setCurrentIndex(0)  
               
 if __name__ == "__main__":
     import sys
