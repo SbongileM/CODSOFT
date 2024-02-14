@@ -1,6 +1,6 @@
 '''
 Author: Sbongile Mdaki
-Date:  22 January 2023
+Date:  22 January 2024
 Project: GUI desktop calculator application for CodSoft internship
 
 This project aims to create a simple calculator with basic arithmetic operations using python.
