@@ -40,6 +40,7 @@ class mainWindow():
         self.add_contact.setCheckable(True)
         self.add_contact.setAutoExclusive(True)
         self.add_contact.setFlat(True)
+        self.add_contact.clicked.connect(self.new_contact)
         self.grid_layout.addWidget(self.add_contact, 0, 2, 1, 1)
         
         self.horizontal_layout = QtWidgets.QHBoxLayout()
@@ -275,20 +276,23 @@ class mainWindow():
         self.cancel.setAutoExclusive(True)
         self.grid_layout_5.addWidget(self.cancel, 5, 0, 1, 1)
         #Add contact button
-        self.add = QtWidgets.QPushButton("Add", self.New_contact)
-        self.add.setFont(font)
-        self.add.setCheckable(True)
-        self.add.setAutoExclusive(True)
-        self.grid_layout_5.addWidget(self.add, 5, 1, 1, 1)
+        self.save = QtWidgets.QPushButton("Save", self.New_contact)
+        self.save.setFont(font)
+        self.save.setCheckable(True)
+        self.save.setAutoExclusive(True)
+        self.grid_layout_5.addWidget(self.save, 5, 1, 1, 1)
         self.app_pages.addWidget(self.New_contact)
         self.grid_layout.addWidget(self.app_pages, 2, 0, 1, 3)
         self.window.setCentralWidget(self.centralwidget)
 
-        self.app_pages.setCurrentIndex(2)
-        self.search_button.clicked.connect(self.search_list.show)
+        self.app_pages.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(self.window)
-
-               
+        
+    #Opens the new contact page  
+    def new_contact(self):
+        self.app_pages.setCurrentIndex(3)
+        
+              
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
