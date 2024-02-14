@@ -21,19 +21,20 @@ class List_Signal(QtWidgets.QListWidget):
         super().mousePressEvent(event)
   
 class Main_Window():
-    def __init__(self, window):
+    def __init__(self):
         super().__init__()
         #data base for new lists
         self.lists_manager = DatabaseManager()
         
         #window setup
-        window.setWindowTitle("TaskMaster To-Do")
-        window.resize(880, 600)
+        self.window = QtWidgets.QMainWindow()
+        self.window.setWindowTitle("TaskMaster To-Do")
+        self.window.resize(880, 600)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/Icons/Icons/To-do.png"))
-        window.setWindowIcon(icon)
+        self.window.setWindowIcon(icon)
         #layout settings
-        self.centralwidget = QtWidgets.QWidget(window)
+        self.centralwidget = QtWidgets.QWidget(self.window)
         self.grid_layout = QtWidgets.QGridLayout(self.centralwidget)
         #General font settings
         self.font = QtGui.QFont()
@@ -48,7 +49,7 @@ class Main_Window():
         self.new_list_window.save.clicked.connect(self.fetch_new_list_name)
         
         #Menu bar
-        self.menu = Menu(self.font,window)
+        self.menu = Menu(self.font,self.window)
         self.menu_bar = self.menu.menu_bar
         self.menu.add_list_button.clicked.connect(self.new_list)
         self.grid_layout.addWidget(self.menu_bar, 0, 0, 1, 1)
@@ -62,7 +63,7 @@ class Main_Window():
         #Create list pages
         self.create_pages()
         self.grid_layout.addWidget(self.MainWindow, 0, 1, 1, 1)
-        window.setCentralWidget(self.centralwidget)
+        self.window.setCentralWidget(self.centralwidget)
         
         #Fetch lists from database
         self.fetch_user_buttons()
@@ -82,7 +83,7 @@ class Main_Window():
         #Set initial page to today's list
         self.MainWindow.setCurrentIndex(0)
         self.menu.today_button.setChecked(True)
-        QtCore.QMetaObject.connectSlotsByName(window)
+        QtCore.QMetaObject.connectSlotsByName(self.window)
       
     """---------------------------Functions that handle lists-------------------------------"""  
     #Shows the new list name edit window when new_list button is selected
@@ -224,7 +225,7 @@ class Main_Window():
         
     #Delete current task    
     def delete_task(self,item,item_no,index):
-        confirm = QtWidgets.QMessageBox.question(window, 'Delete Task', 
+        confirm = QtWidgets.QMessageBox.question(self.window, 'Delete Task', 
                                                  'Are you sure you want to delete this task?', 
                                                  QtWidgets.QMessageBox.Yes|
                                                  QtWidgets.QMessageBox.No)
