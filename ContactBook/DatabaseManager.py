@@ -35,3 +35,4 @@ class DatabaseManager:
             SELECT name, number, email, store, address FROM contacts
         ''')
         return self.cursor.fetchall()
+    

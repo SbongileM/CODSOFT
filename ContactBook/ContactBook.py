@@ -191,6 +191,7 @@ class mainWindow():
         self.delete.setFont(font)
         self.delete.setCheckable(True)
         self.delete.setAutoExclusive(True)
+        self.delete.clicked.connect(self.delete_contact)
         self.grid_layout_4.addWidget(self.delete, 5, 0, 1, 1)
         #Update contact details 
         self.update = QtWidgets.QPushButton("Update",self.contact_view)
@@ -307,8 +308,7 @@ class mainWindow():
         self.app_pages.addWidget(self.New_contact)
         self.grid_layout.addWidget(self.app_pages, 2, 0, 1, 3)
         self.window.setCentralWidget(self.centralwidget)
-        #Fetch contacts saved in memory
-        self.fetch_contacts()
+        
         #Set current page to contact list
         self.app_pages.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(self.window)
@@ -356,10 +356,14 @@ class mainWindow():
         if searched_item:
             matched_items = self._contact_manager.get_contact(searched_item)
             
-            for item in matched_items:
-                output_txt = f"Name: {item[1]}\nNumber: {item[2]}\nEmail: {item[3]}\nStore: {item[4]}\nPhysical Address: {item[5]}"
-                                
-                self.search_list.addItem(output_txt)
+            if matched_items:
+                for item in matched_items:
+                    output_txt = f"Name: {item[1]}\nNumber: {item[2]}\nEmail: {item[3]}\nStore: {item[4]}\nPhysical Address: {item[5]}"
+                    self.search_list.addItem(output_txt)
+            
+            else:
+                self.search_list.addItem(f'{searched_item}, cannot be found') 
+                
         
     #Save contact function for the new contact view save button        
     def save_contact(self):
@@ -371,9 +375,9 @@ class mainWindow():
         
         self._contacts.append((name,number,email,store_name,address))
         self.contact_list.addItem(f"Name: {name}\nNumber: {number}\nEmail: {email}\nStore: {store_name}\nPhysical Address: {address}")
-        self.save_contacts()
         self.name_.clear(),self.phone_.clear(),self.email_.clear(),self.store_name_.clear()
         self.address_.clear()
+        self.save_contacts()              
         self.app_pages.setCurrentIndex(0)
         
     #Opens contact view page for any clicked on item in the list
@@ -388,7 +392,6 @@ class mainWindow():
                 self.email.setText(str((self._contacts[i])[2]))
                 self.store_name.setText(str((self._contacts[i])[3]))
                 self.address.setText(str((self._contacts[i])[4]))
-                self.contact_list.takeItem(i)
                 self._contacts.remove(self._contacts[i])
                 break
         self.app_pages.setCurrentIndex(2)
@@ -400,28 +403,23 @@ class mainWindow():
         email = self.email.text()
         store_name = self.store_name.text()
         address = self.address.text()
+        item_no = self.contact_list.currentRow() 
         
+        self.contact_list.takeItem(item_no)
         self._contacts.append((name,number,email,store_name,address))
         self.contact_list.addItem(f"Name: {name}\nNumber: {number}\nEmail: {email}\nStore: {store_name}\nPhysical Address: {address}")
+        self.save_contacts()
         self.app_pages.setCurrentIndex(0)
         
     #Removes contact from the list of saved contacts
-    #Has a bug
     def delete_contact(self):
-        name = self.name.text()
-        number = self.phone.text()
-        email = self.email.text()
-        store_name = self.store_name.text()
-        address = self.address.text()
+        item_no = self.contact_list.currentRow()
+        item = self.contact_list.currentItem()
         
-        for i in range(len(self.contacts)):
-            if str((self._contacts[i])[0]) == name and str((self._contacts[i])[1]) == number\
-                and str((self._contacts[i])[2]) == email and str((self._contacts[i])[3]) == store_name\
-                    and str((self._contacts[i])[4]) == address:
-                        
-                        self.contact_list.takeItem(i)
-                        self._contacts.remove(self._contacts[i])
-    
+        if item in self._contacts:
+            self._contacts.remove(item)
+        
+        self.contact_list.takeItem(item_no)
         self.save_contacts()
         self.app_pages.setCurrentIndex(0)
               
