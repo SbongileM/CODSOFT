@@ -54,3 +54,4 @@ class Page():
         self.line.setFrameShape(QtWidgets.QFrame.HLine)
         self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.grid_layout.addWidget(self.line, 2, 0, 1, 4)
+        
