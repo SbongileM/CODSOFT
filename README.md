@@ -16,14 +16,14 @@ root, square and parenthesis were added. The calculator can evaluate more than j
 3. Rock-Paper-Scissors
 <p>This project aims to create a user-friendly interface with clear instructions and
 feedback with the following functionalities:</p>
-<ul>- Prompts the user to choose rock, paper, or scissors and generates a random choice for the computer.
+- Prompts the user to choose rock, paper, or scissors and generates a random choice for the computer.
 - Determines the winner based on the user's choice and the computer's choice, using the game rules displayed
 on the home window. Rock beats scissors, scissors beat paper, and paper beats rock.
 - Displays the user's choice and the computer's choice, and the result, whether 
 the user wins, loses, or if it's a tie.
 - Score tracking to keep track of the user's and computer's scores for
 multiple rounds.
-- Replay for the user if they want to play another round.</ul>
+- Replay for the user if they want to play another round.
 
 4. Contact book
 <p>This project aims to create a user-friendly contact book interface to help users to manage their contacts, with
@@ -49,7 +49,7 @@ References for icons
 2. Calculator app window icon
 - "https://www.flaticon.com/free-icons/calculator" title="calculator icons" - created by Freepik - Flaticon
 
-3.Rock paper scissors
+3. Rock paper scissors
 - window icon - https://stock.adobe.com/za/images/rock-paper-scissors-icons/169221496 - By sudowoodo 
 - help - https://www.pngitem.com/middle/ixowRJT_rock-paper-scissors-rules-hd-png-download/ - By Animu Detox 
 - rock - https://www.pngaaa.com/detail/3313783
