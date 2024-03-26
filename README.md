@@ -1,19 +1,19 @@
-Overview
+<h2>Overview</h2>
 
 Here is a collection of Python-based desktop GUI applications that were created during a remote CodSoft internship.
 
-1. To-Do list
+<h3>1. To-Do list</h3>
 <p>This project aims to create a user-friendly interface for a To-Do application which
 will help users organize their tasks efficiently. It allows the user to create, update
 and track their To-Do lists.</p>
 
-2. Standard calculator
+<h3>2. Standard calculator</h3>
 <p>This project aims to create a simple calculator with basic arithmetic operations using python.
 The calculator prompts the user to input two numbers and an operation of choice, performs a 
 calculation and then displays the result. Additional functionalities such as percentage, square 
 root, square and parenthesis were added. The calculator can evaluate more than just two numbers.</p>
 
-3. Rock-Paper-Scissors
+<h3>3. Rock-Paper-Scissors</h3>
 This project aims to create a user-friendly interface with clear instructions and
 feedback with the following functionalities:
 - Prompts the user to choose rock, paper, or scissors and generates a random choice for the computer.
@@ -25,7 +25,7 @@ the user wins, loses, or if it's a tie.
 multiple rounds.
 - Replay for the user if they want to play another round.
 
-4. Contact book
+<h3>4. Contact book</h3>
 This project aims to create a user-friendly contact book interface to help users to manage their contacts, with
 the following functionalities:
 - Shows contact information: Store name, phone number, email, and address for each contact.
@@ -35,14 +35,14 @@ the following functionalities:
 - Enables users to update contact details.
 - Provides an option to delete a contact.
 
-5. Random password generator
+<h3>5. Random password generator</h3>
 <p>This project aims to create a password generator application using Python. It prompts the user 
 to specify the desired length of the password and the complexity. Uses a combination of random 
 characters to generate a password of the specified length. Then it prints the generated password 
 on the screen. The user has the freedom to select the type of characters they want to include
 in the password.</p>
 -------------------------------------------------------------------------------------------------------------------
-References for icons
+<h2>References for icons</h2>
 1. Password generator window icon
 - "https://www.flaticon.com/free-icons/password" title="password icons" - created by Prosymbols Premium - Flaticon
 
