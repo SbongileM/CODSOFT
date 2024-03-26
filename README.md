@@ -14,8 +14,8 @@ calculation and then displays the result. Additional functionalities such as per
 root, square and parenthesis were added. The calculator can evaluate more than just two numbers.</p>
 
 3. Rock-Paper-Scissors
-<p>This project aims to create a user-friendly interface with clear instructions and
-feedback with the following functionalities:</p>
+<pre>This project aims to create a user-friendly interface with clear instructions and
+feedback with the following functionalities:
 - Prompts the user to choose rock, paper, or scissors and generates a random choice for the computer.
 - Determines the winner based on the user's choice and the computer's choice, using the game rules displayed
 on the home window. Rock beats scissors, scissors beat paper, and paper beats rock.
@@ -23,17 +23,17 @@ on the home window. Rock beats scissors, scissors beat paper, and paper beats ro
 the user wins, loses, or if it's a tie.
 - Score tracking to keep track of the user's and computer's scores for
 multiple rounds.
-- Replay for the user if they want to play another round.
+- Replay for the user if they want to play another round.</pre>
 
 4. Contact book
-<p>This project aims to create a user-friendly contact book interface to help users to manage their contacts, with
-the following functionalities:</p>
+<pre>This project aims to create a user-friendly contact book interface to help users to manage their contacts, with
+the following functionalities:
 - Shows contact information: Store name, phone number, email, and address for each contact.
 - Allow users to add new contacts with their details.
 - Displays a list of all saved contacts with names and phone numbers.
 - A search functionality to find contacts by name or phone number.
 - Enables users to update contact details.
-- Provides an option to delete a contact.
+- Provides an option to delete a contact.</pre>
 
 5. Random password generator
 <p>This project aims to create a password generator application using Python. It prompts the user 
@@ -42,7 +42,7 @@ characters to generate a password of the specified length. Then it prints the ge
 on the screen. The user has the freedom to select the type of characters they want to include
 in the password.</p>
 -------------------------------------------------------------------------------------------------------------------
-<p>References for icons</p>
+<pre>References for icons
 1. Password generator window icon
 - "https://www.flaticon.com/free-icons/password" title="password icons" - created by Prosymbols Premium - Flaticon
 
@@ -77,6 +77,7 @@ in the password.</p>
 - store - "https://www.flaticon.com/free-icons/online-marketplace" title="online marketplace icons" - created by Phoenix Dungeon 
 - phone - href="https://www.flaticon.com/free-icons/phone" title="phone icons" - created by Creaticca Creative Agency - Flaticon
 - name - href="https://www.flaticon.com/free-icons/username" title="username icons" - created by riajulislam - Flaticon
+</pre>
 ------------------------------------------------------------------------------------------------------------------------------------
 
 Stack
