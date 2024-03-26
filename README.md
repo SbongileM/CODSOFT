@@ -44,39 +44,39 @@ in the password.
 -------------------------------------------------------------------------------------------------------------------
 References for icons
 1. Password generator window icon
-"https://www.flaticon.com/free-icons/password" title="password icons" - created by Prosymbols Premium - Flaticon
+- "https://www.flaticon.com/free-icons/password" title="password icons" - created by Prosymbols Premium - Flaticon
 
 2. Calculator app window icon
-"https://www.flaticon.com/free-icons/calculator" title="calculator icons" - created by Freepik - Flaticon
+- "https://www.flaticon.com/free-icons/calculator" title="calculator icons" - created by Freepik - Flaticon
 
 3.Rock paper scissors
-window icon - https://stock.adobe.com/za/images/rock-paper-scissors-icons/169221496 - By sudowoodo 
-help - https://www.pngitem.com/middle/ixowRJT_rock-paper-scissors-rules-hd-png-download/ - By Animu Detox 
-rock - https://www.pngaaa.com/detail/3313783
-paper- https://www.pngaaa.com/detail/3313779
-scissors - https://www.pngaaa.com/detail/3313815
+- window icon - https://stock.adobe.com/za/images/rock-paper-scissors-icons/169221496 - By sudowoodo 
+- help - https://www.pngitem.com/middle/ixowRJT_rock-paper-scissors-rules-hd-png-download/ - By Animu Detox 
+- rock - https://www.pngaaa.com/detail/3313783
+- paper- https://www.pngaaa.com/detail/3313779
+- scissors - https://www.pngaaa.com/detail/3313815
 
 4. To do list
-search - "https://www.flaticon.com/free-icons/search" title="search icons" - created by Vaadin - Flaticon
-sun - "https://www.flaticon.com/free-icons/sun" title="sun icons" - created by bqlqn - Flaticon
-star - "https://www.flaticon.com/free-icons/star" title="star icons" - created by Pixel perfect - Flaticon
-complete -"https://www.flaticon.com/free-icons/correct" title="correct icons" - created by IconKanan - Flaticon
-all - "https://www.flaticon.com/free-icons/all-inclusive" title="all inclusive icons" - created by Radhe Icon - Flaticon
-work - "https://www.flaticon.com/free-icons/work" title="work icons" - created by Freepik - Flaticon
-gym - "https://www.flaticon.com/free-icons/gym" title="gym icons" - created by Aldo Cervantes - Flaticon
-shopping - "https://www.flaticon.com/free-icons/bag" title="bag icons" - created by Phoenix Group - Flaticon
-add - "https://www.flaticon.com/free-icons/add" title="add icons" - created by Pixel perfect - Flaticon
-list - "https://www.flaticon.com/free-icons/view-list" title="view list icons" - created by JessiGue - Flaticon
-bin - "https://www.flaticon.com/free-icons/trash" title="trash icons" - created by Freepik - Flaticon
+- search - "https://www.flaticon.com/free-icons/search" title="search icons" - created by Vaadin - Flaticon
+- sun - "https://www.flaticon.com/free-icons/sun" title="sun icons" - created by bqlqn - Flaticon
+- star - "https://www.flaticon.com/free-icons/star" title="star icons" - created by Pixel perfect - Flaticon
+- complete -"https://www.flaticon.com/free-icons/correct" title="correct icons" - created by IconKanan - Flaticon
+- all - "https://www.flaticon.com/free-icons/all-inclusive" title="all inclusive icons" - created by Radhe Icon - Flaticon
+- work - "https://www.flaticon.com/free-icons/work" title="work icons" - created by Freepik - Flaticon
+- gym - "https://www.flaticon.com/free-icons/gym" title="gym icons" - created by Aldo Cervantes - Flaticon
+-shopping - "https://www.flaticon.com/free-icons/bag" title="bag icons" - created by Phoenix Group - Flaticon
+- add - "https://www.flaticon.com/free-icons/add" title="add icons" - created by Pixel perfect - Flaticon
+- list - "https://www.flaticon.com/free-icons/view-list" title="view list icons" - created by JessiGue - Flaticon
+- bin - "https://www.flaticon.com/free-icons/trash" title="trash icons" - created by Freepik - Flaticon
 
 5. Contact book
-window-icon - "https://www.flaticon.com/free-icons/contact" title="contact icons" - created by Amazona Adorada - Flaticon
-add contact - "https://www.flaticon.com/free-icons/contact-us" title="contact us icons" - created by Ilham Fitrotul Hayat - Flaticon
-email - "https://www.flaticon.com/free-icons/adress" title="adress icons" - created by Metami septiana - Flaticon
-address - "https://www.flaticon.com/free-icons/adress" title="adress icons" - created by kmg design - Flaticon
-store - "https://www.flaticon.com/free-icons/online-marketplace" title="online marketplace icons" - created by Phoenix Dungeon 
-phone - href="https://www.flaticon.com/free-icons/phone" title="phone icons" - created by Creaticca Creative Agency - Flaticon
-name - href="https://www.flaticon.com/free-icons/username" title="username icons" - created by riajulislam - Flaticon
+- window-icon - "https://www.flaticon.com/free-icons/contact" title="contact icons" - created by Amazona Adorada - Flaticon
+- add contact - "https://www.flaticon.com/free-icons/contact-us" title="contact us icons" - created by Ilham Fitrotul Hayat - Flaticon
+- email - "https://www.flaticon.com/free-icons/adress" title="adress icons" - created by Metami septiana - Flaticon
+- address - "https://www.flaticon.com/free-icons/adress" title="adress icons" - created by kmg design - Flaticon
+- store - "https://www.flaticon.com/free-icons/online-marketplace" title="online marketplace icons" - created by Phoenix Dungeon 
+- phone - href="https://www.flaticon.com/free-icons/phone" title="phone icons" - created by Creaticca Creative Agency - Flaticon
+- name - href="https://www.flaticon.com/free-icons/username" title="username icons" - created by riajulislam - Flaticon
 ------------------------------------------------------------------------------------------------------------------------------------
 
 Stack
