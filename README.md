@@ -14,8 +14,8 @@ calculation and then displays the result. Additional functionalities such as per
 root, square and parenthesis were added. The calculator can evaluate more than just two numbers.</p>
 
 3. Rock-Paper-Scissors
-<p>This project aims to create a user-friendly interface with clear instructions and
-feedback with the following functionalities:</p>
+This project aims to create a user-friendly interface with clear instructions and
+feedback with the following functionalities:
 - Prompts the user to choose rock, paper, or scissors and generates a random choice for the computer.
 - Determines the winner based on the user's choice and the computer's choice, using the game rules displayed
 on the home window. Rock beats scissors, scissors beat paper, and paper beats rock.
@@ -26,8 +26,8 @@ multiple rounds.
 - Replay for the user if they want to play another round.
 
 4. Contact book
-<p>This project aims to create a user-friendly contact book interface to help users to manage their contacts, with
-the following functionalities:</p>
+This project aims to create a user-friendly contact book interface to help users to manage their contacts, with
+the following functionalities:
 - Shows contact information: Store name, phone number, email, and address for each contact.
 - Allow users to add new contacts with their details.
 - Displays a list of all saved contacts with names and phone numbers.
