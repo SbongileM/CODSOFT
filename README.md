@@ -3,18 +3,18 @@ Overview
 Here is a collection of Python-based desktop GUI applications that were created during a remote CodSoft internship.
 
 1. To-Do list
-This project aims to create a user-friendly interface for a To-Do application which
+<p>This project aims to create a user-friendly interface for a To-Do application which
 will help users organize their tasks efficiently. It allows the user to create, update
-and track their To-Do lists.
+and track their To-Do lists.</p>
 
 2. Standard calculator
-This project aims to create a simple calculator with basic arithmetic operations using python.
+<p>This project aims to create a simple calculator with basic arithmetic operations using python.
 The calculator prompts the user to input two numbers and an operation of choice, performs a 
 calculation and then displays the result. Additional functionalities such as percentage, square 
-root, square and parenthesis were added. The calculator can evaluate more than just two numbers.
+root, square and parenthesis were added. The calculator can evaluate more than just two numbers.</p>
 
 3. Rock-Paper-Scissors
-This project aims to create a user-friendly interface with clear instructions and
+<p>This project aims to create a user-friendly interface with clear instructions and
 feedback with the following functionalities:
 - Prompts the user to choose rock, paper, or scissors and generates a random choice for the computer.
 - Determines the winner based on the user's choice and the computer's choice, using the game rules displayed
@@ -24,9 +24,10 @@ the user wins, loses, or if it's a tie.
 - Score tracking to keep track of the user's and computer's scores for
 multiple rounds.
 - Replay for the user if they want to play another round.
+</p>
 
 4. Contact book
-This project aims to create a user-friendly contact book interface to help users to manage their contacts, with
+<p>This project aims to create a user-friendly contact book interface to help users to manage their contacts, with
 the following functionalities:
 - Shows contact information: Store name, phone number, email, and address for each contact.
 - Allow users to add new contacts with their details.
@@ -34,13 +35,14 @@ the following functionalities:
 - A search functionality to find contacts by name or phone number.
 - Enables users to update contact details.
 - Provides an option to delete a contact.
+</p>
 
 5. Random password generator
-This project aims to create a password generator application using Python. It prompts the user 
+<p>This project aims to create a password generator application using Python. It prompts the user 
 to specify the desired length of the password and the complexity. Uses a combination of random 
 characters to generate a password of the specified length. Then it prints the generated password 
 on the screen. The user has the freedom to select the type of characters they want to include
-in the password.
+in the password.</p>
 -------------------------------------------------------------------------------------------------------------------
 References for icons
 1. Password generator window icon
