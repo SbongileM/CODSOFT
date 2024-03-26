@@ -28,12 +28,12 @@ multiple rounds.
 4. Contact book
 <p>This project aims to create a user-friendly contact book interface to help users to manage their contacts, with
 the following functionalities:</p>
-<ul>- Shows contact information: Store name, phone number, email, and address for each contact.
+- Shows contact information: Store name, phone number, email, and address for each contact.
 - Allow users to add new contacts with their details.
 - Displays a list of all saved contacts with names and phone numbers.
 - A search functionality to find contacts by name or phone number.
 - Enables users to update contact details.
-- Provides an option to delete a contact.</ul>
+- Provides an option to delete a contact.
 
 5. Random password generator
 <p>This project aims to create a password generator application using Python. It prompts the user 
@@ -50,14 +50,14 @@ References for icons
 - "https://www.flaticon.com/free-icons/calculator" title="calculator icons" - created by Freepik - Flaticon
 
 3.Rock paper scissors
-<ul>- window icon - https://stock.adobe.com/za/images/rock-paper-scissors-icons/169221496 - By sudowoodo 
+- window icon - https://stock.adobe.com/za/images/rock-paper-scissors-icons/169221496 - By sudowoodo 
 - help - https://www.pngitem.com/middle/ixowRJT_rock-paper-scissors-rules-hd-png-download/ - By Animu Detox 
 - rock - https://www.pngaaa.com/detail/3313783
 - paper- https://www.pngaaa.com/detail/3313779
-- scissors - https://www.pngaaa.com/detail/3313815</ul>
+- scissors - https://www.pngaaa.com/detail/3313815
 
 4. To do list
-<ul>- search - "https://www.flaticon.com/free-icons/search" title="search icons" - created by Vaadin - Flaticon
+- search - "https://www.flaticon.com/free-icons/search" title="search icons" - created by Vaadin - Flaticon
 - sun - "https://www.flaticon.com/free-icons/sun" title="sun icons" - created by bqlqn - Flaticon
 - star - "https://www.flaticon.com/free-icons/star" title="star icons" - created by Pixel perfect - Flaticon
 - complete -"https://www.flaticon.com/free-icons/correct" title="correct icons" - created by IconKanan - Flaticon
@@ -67,16 +67,17 @@ References for icons
 -shopping - "https://www.flaticon.com/free-icons/bag" title="bag icons" - created by Phoenix Group - Flaticon
 - add - "https://www.flaticon.com/free-icons/add" title="add icons" - created by Pixel perfect - Flaticon
 - list - "https://www.flaticon.com/free-icons/view-list" title="view list icons" - created by JessiGue - Flaticon
-- bin - "https://www.flaticon.com/free-icons/trash" title="trash icons" - created by Freepik - Flaticon</ul>
+- bin - "https://www.flaticon.com/free-icons/trash" title="trash icons" - created by Freepik - Flaticon
+  
 
 5. Contact book
-<ul>- window-icon - "https://www.flaticon.com/free-icons/contact" title="contact icons" - created by Amazona Adorada - Flaticon
+- window-icon - "https://www.flaticon.com/free-icons/contact" title="contact icons" - created by Amazona Adorada - Flaticon
 - add contact - "https://www.flaticon.com/free-icons/contact-us" title="contact us icons" - created by Ilham Fitrotul Hayat - Flaticon
 - email - "https://www.flaticon.com/free-icons/adress" title="adress icons" - created by Metami septiana - Flaticon
 - address - "https://www.flaticon.com/free-icons/adress" title="adress icons" - created by kmg design - Flaticon
 - store - "https://www.flaticon.com/free-icons/online-marketplace" title="online marketplace icons" - created by Phoenix Dungeon 
 - phone - href="https://www.flaticon.com/free-icons/phone" title="phone icons" - created by Creaticca Creative Agency - Flaticon
-- name - href="https://www.flaticon.com/free-icons/username" title="username icons" - created by riajulislam - Flaticon</ul>
+- name - href="https://www.flaticon.com/free-icons/username" title="username icons" - created by riajulislam - Flaticon
 
 
 Stack
