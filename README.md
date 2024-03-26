@@ -14,8 +14,8 @@ calculation and then displays the result. Additional functionalities such as per
 root, square and parenthesis were added. The calculator can evaluate more than just two numbers.</p>
 
 <h3>3. Rock-Paper-Scissors</h3>
-This project aims to create a user-friendly interface with clear instructions and
-feedback with the following functionalities:
+<p>This project aims to create a user-friendly interface with clear instructions and
+feedback with the following functionalities:</p>
 - Prompts the user to choose rock, paper, or scissors and generates a random choice for the computer.
 - Determines the winner based on the user's choice and the computer's choice, using the game rules displayed
 on the home window. Rock beats scissors, scissors beat paper, and paper beats rock.
@@ -26,8 +26,8 @@ multiple rounds.
 - Replay for the user if they want to play another round.
 
 <h3>4. Contact book</h3>
-This project aims to create a user-friendly contact book interface to help users to manage their contacts, with
-the following functionalities:
+<p>This project aims to create a user-friendly contact book interface to help users to manage their contacts, with
+the following functionalities:</p>
 - Shows contact information: Store name, phone number, email, and address for each contact.
 - Allow users to add new contacts with their details.
 - Displays a list of all saved contacts with names and phone numbers.
@@ -43,20 +43,20 @@ on the screen. The user has the freedom to select the type of characters they wa
 in the password.</p>
 -------------------------------------------------------------------------------------------------------------------
 <h2>References for icons</h2>
-1. Password generator window icon
+<h3>1. Password generator window icon</h3>
 - "https://www.flaticon.com/free-icons/password" title="password icons" - created by Prosymbols Premium - Flaticon
 
-2. Calculator app window icon
+<h3>2. Calculator app window icon</h3>
 - "https://www.flaticon.com/free-icons/calculator" title="calculator icons" - created by Freepik - Flaticon
 
-3.Rock paper scissors
+<h3>3.Rock paper scissors</h3>
 - window icon - https://stock.adobe.com/za/images/rock-paper-scissors-icons/169221496 - By sudowoodo 
 - help - https://www.pngitem.com/middle/ixowRJT_rock-paper-scissors-rules-hd-png-download/ - By Animu Detox 
 - rock - https://www.pngaaa.com/detail/3313783
 - paper- https://www.pngaaa.com/detail/3313779
 - scissors - https://www.pngaaa.com/detail/3313815
 
-4. To do list
+<h3>4. To do list</h3>
 - search - "https://www.flaticon.com/free-icons/search" title="search icons" - created by Vaadin - Flaticon
 - sun - "https://www.flaticon.com/free-icons/sun" title="sun icons" - created by bqlqn - Flaticon
 - star - "https://www.flaticon.com/free-icons/star" title="star icons" - created by Pixel perfect - Flaticon
@@ -69,7 +69,7 @@ in the password.</p>
 - list - "https://www.flaticon.com/free-icons/view-list" title="view list icons" - created by JessiGue - Flaticon
 - bin - "https://www.flaticon.com/free-icons/trash" title="trash icons" - created by Freepik - Flaticon
 
-5. Contact book
+<h3>5. Contact book</h3>
 - window-icon - "https://www.flaticon.com/free-icons/contact" title="contact icons" - created by Amazona Adorada - Flaticon
 - add contact - "https://www.flaticon.com/free-icons/contact-us" title="contact us icons" - created by Ilham Fitrotul Hayat - Flaticon
 - email - "https://www.flaticon.com/free-icons/adress" title="adress icons" - created by Metami septiana - Flaticon
@@ -79,7 +79,7 @@ in the password.</p>
 - name - href="https://www.flaticon.com/free-icons/username" title="username icons" - created by riajulislam - Flaticon
 ------------------------------------------------------------------------------------------------------------------------------------
 
-Stack
+<h2>Stack</h2>
 - Framework - pyQt5
 - Language - Python
 - Styling - basic CSS and HTML
